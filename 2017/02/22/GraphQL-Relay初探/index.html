@@ -3,27 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>graphql初探 | Bonfire</title>
+  <title>graphql+relay初探 | Bonfire</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="GraphQL" />
+  <meta name="keywords" content="GraphQLRelay" />
   
   
   
   
-  <meta name="description" content="简介GraphQL是Facebook开源的一套用于API的查询语言和runtime，其比较明显的特色在于用一次请求拿到所有想要的数据，并且返回的查询结果与想要查询的格式一致。
-Query, Mutation, Schemas, Types12345678&amp;#123;    hero &amp;#123;        name        friends&amp;#123;            name">
+  <meta name="description" content="GraphQL简介GraphQL是Facebook开源的一套用于API的查询语言和runtime，其比较明显的特色在于用一次请求拿到所有想要的数据，并且返回的查询结果与想要查询的格式一致。
+Query, Mutation, Schemas, Types12345678&amp;#123;    hero &amp;#123;        name        friends&amp;#123;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="GraphQL初探">
+<meta property="og:title" content="GraphQL+Relay初探">
 <meta property="og:url" content="http://yoursite.com/2017/02/22/GraphQL-Relay初探/index.html">
 <meta property="og:site_name" content="Bonfire">
-<meta property="og:description" content="简介GraphQL是Facebook开源的一套用于API的查询语言和runtime，其比较明显的特色在于用一次请求拿到所有想要的数据，并且返回的查询结果与想要查询的格式一致。
-Query, Mutation, Schemas, Types12345678&amp;#123;    hero &amp;#123;        name        friends&amp;#123;            name">
-<meta property="og:updated_time" content="2017-02-21T17:48:11.000Z">
+<meta property="og:description" content="GraphQL简介GraphQL是Facebook开源的一套用于API的查询语言和runtime，其比较明显的特色在于用一次请求拿到所有想要的数据，并且返回的查询结果与想要查询的格式一致。
+Query, Mutation, Schemas, Types12345678&amp;#123;    hero &amp;#123;        name        friends&amp;#123;">
+<meta property="og:updated_time" content="2017-02-21T18:19:40.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="GraphQL初探">
-<meta name="twitter:description" content="简介GraphQL是Facebook开源的一套用于API的查询语言和runtime，其比较明显的特色在于用一次请求拿到所有想要的数据，并且返回的查询结果与想要查询的格式一致。
-Query, Mutation, Schemas, Types12345678&amp;#123;    hero &amp;#123;        name        friends&amp;#123;            name">
+<meta name="twitter:title" content="GraphQL+Relay初探">
+<meta name="twitter:description" content="GraphQL简介GraphQL是Facebook开源的一套用于API的查询语言和runtime，其比较明显的特色在于用一次请求拿到所有想要的数据，并且返回的查询结果与想要查询的格式一致。
+Query, Mutation, Schemas, Types12345678&amp;#123;    hero &amp;#123;        name        friends&amp;#123;">
   
     <link rel="alternate" href="/atom.xml" title="Bonfire" type="application/atom+xml">
   
@@ -157,7 +157,7 @@ Query, Mutation, Schemas, Types12345678&amp;#123;    hero &amp;#123;        name
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      GraphQL初探
+      GraphQL+Relay初探
     </h1>
   
 
@@ -170,12 +170,12 @@ Query, Mutation, Schemas, Types12345678&amp;#123;    hero &amp;#123;        name
 	</a>
 
       
-    <a class="article-category-link" href="/categories/front-end/">front-end</a>
+    <a class="article-category-link" href="/categories/front-end/">front-end</a><a class="article-category-link" href="/categories/front-end/back-end/">back-end</a>
 
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>GraphQL是Facebook开源的一套用于API的查询语言和runtime，其比较明显的特色在于用一次请求拿到所有想要的数据，并且返回的查询结果与想要查询的格式一致。</p>
+        <h3 id="GraphQL简介"><a href="#GraphQL简介" class="headerlink" title="GraphQL简介"></a>GraphQL简介</h3><p>GraphQL是Facebook开源的一套用于API的查询语言和runtime，其比较明显的特色在于用一次请求拿到所有想要的数据，并且返回的查询结果与想要查询的格式一致。</p>
 <h3 id="Query-Mutation-Schemas-Types"><a href="#Query-Mutation-Schemas-Types" class="headerlink" title="Query, Mutation, Schemas, Types"></a>Query, Mutation, Schemas, Types</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    hero &#123;</div><div class="line">        name</div><div class="line">        friends&#123;</div><div class="line">            name</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>拿一个简单的query来分析，这里的hero，name或者friends叫做field，field会返回的类型type中定义的类型。</p>
 <ul>
@@ -189,11 +189,18 @@ Query, Mutation, Schemas, Types12345678&amp;#123;    hero &amp;#123;        name
 <li><p>GraphQL不只是提供了获得数据的方式，也提供了Mutation去修改服务端的数据</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">mutation CreateReviewForEpisode($ep: Episode!, $review: ReviewInput!) &#123;</div><div class="line">  createReview(episode: $ep, review: $review) &#123;</div><div class="line">    stars</div><div class="line">    commentary</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
+<li><p>GraphQL的schemas能定义接口和结合(union)的type，因此当query中的field在schema中对应这些type时，你需要内联碎片(inline fragments)去获取混合(concrete)type之下的数据。<br>例如 hero这个field本来对应的type为Character，如果这个hero是Droid类型，则会返回primaryFunction，如果为Human类型，则会返回height。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">query HeroForEpisode($ep: Episode!) &#123;</div><div class="line">  hero(episode: $ep) &#123;</div><div class="line">    name</div><div class="line">    ... on Droid &#123;</div><div class="line">      primaryFunction</div><div class="line">    &#125;</div><div class="line">    ... on Human &#123;</div><div class="line">      height</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>当不知道服务器返回的type时，可以用meta field去代替</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  search(text: &quot;an&quot;) &#123;</div><div class="line">    __typename</div><div class="line">    ... on Human &#123;</div><div class="line">      name</div><div class="line">    &#125;</div><div class="line">    ... on Droid &#123;</div><div class="line">      name</div><div class="line">    &#125;</div><div class="line">    ... on Starship &#123;</div><div class="line">      name</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
 </ul>
+<p>这样返回结果里的__typename就会是这个查询结果的type的名字了(此例中可能为Human、Droid或者Starship)</p>
 <h3 id="GraphQL对比RESTful"><a href="#GraphQL对比RESTful" class="headerlink" title="GraphQL对比RESTful"></a>GraphQL对比RESTful</h3><p>一万个人心中有一万种RESTful，RESTful虽然简单易理解，但是在深入开发的过程中其难扩展的缺点逐渐暴露了出来。</p>
 <p>例如前面官网上的例子，GraphQL会直接返回这样的结果<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"data"</span>: &#123;</div><div class="line">        <span class="attr">"hero"</span>: &#123;</div><div class="line">            <span class="attr">"name"</span>: <span class="string">"Luke Skywalker"</span></div><div class="line">            <span class="string">"friends"</span>: [</div><div class="line">                &#123; <span class="attr">"name"</span>: <span class="string">"Han Solo"</span> &#125;,</div><div class="line">                &#123; <span class="attr">"name"</span>: <span class="string">"R2-D2"</span> &#125;,</div><div class="line">                &#123; <span class="attr">"name"</span>: <span class="string">"Leia Organa"</span> &#125;,</div><div class="line">            ]</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>而RESTful，可能有人会这样写<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /hero/ and GET /hero/加上前一次查询返回的id/friends/</div></pre></td></tr></table></figure></p>
-<p>或者<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /heros?query=friends</div></pre></td></tr></table></figure></p>
+<p>而RESTful，可能有人会这样写<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /hero/ and GET /hero/加上前一次查询返回的id/friends/</div></pre></td></tr></table></figure></p>
+<p>或者<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /heros?query=friends</div></pre></td></tr></table></figure></p>
 <p>这种情景下，RESTful可能会去发送多次请求，或者把请求弄的不那么直观</p>
 
       
@@ -201,7 +208,7 @@ Query, Mutation, Schemas, Types12345678&amp;#123;    hero &amp;#123;        name
     <footer class="article-footer">
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GraphQL/">GraphQL</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GraphQL/">GraphQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Relay/">Relay</a></li></ul>
 
     </footer>
   </div>
@@ -226,7 +233,7 @@ Query, Mutation, Schemas, Types12345678&amp;#123;    hero &amp;#123;        name
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Query-Mutation-Schemas-Types"><span class="toc-number">2.</span> <span class="toc-text">Query, Mutation, Schemas, Types</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GraphQL对比RESTful"><span class="toc-number">3.</span> <span class="toc-text">GraphQL对比RESTful</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#GraphQL简介"><span class="toc-number">1.</span> <span class="toc-text">GraphQL简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Query-Mutation-Schemas-Types"><span class="toc-number">2.</span> <span class="toc-text">Query, Mutation, Schemas, Types</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GraphQL对比RESTful"><span class="toc-number">3.</span> <span class="toc-text">GraphQL对比RESTful</span></a></li></ol>
     
     </div>
   </aside>
