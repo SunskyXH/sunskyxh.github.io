@@ -6,21 +6,21 @@
   <title>vue自定义指令实现highlight.js高亮代码 | Bonfire</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="vue" />
+  <meta name="keywords" content="Vue" />
   
   
   
   
-  <meta name="description" content="在vue项目中直接引入highlight.js会遇到一些问题，官方论坛上的一篇帖子给出了出现这种现象的原因，即vue-router在改变路由的时候会清除渲染,并移除事件参考了答案后，得出了用vue的自定义指令(directive)解决问题的方法：123456import hljs from &apos;highlight.js&apos;//还需要引入hljs的主题css，此处略过Vue.directive(&apos;hig">
+  <meta name="description" content="在Vue项目中直接引入highlight.js会遇到一些问题，官方论坛上的一篇帖子给出了出现这种现象的原因，即vue-router在改变路由的时候会清除渲染,并移除事件参考了答案后，得出了用vue的自定义指令(directive)解决问题的方法：123456import hljs from &apos;highlight.js&apos;//还需要引入hljs的主题css，此处略过Vue.directive(&apos;hig">
 <meta property="og:type" content="article">
-<meta property="og:title" content="vue自定义指令实现Highlight.js高亮代码">
-<meta property="og:url" content="http://yoursite.com/2016/07/21/vue自定义指令实现Highlight-js高亮代码/index.html">
+<meta property="og:title" content="Vue自定义指令实现Highlight.js高亮代码">
+<meta property="og:url" content="http://yoursite.com/2016/07/21/Vue自定义指令实现Highlight-js高亮代码/index.html">
 <meta property="og:site_name" content="Bonfire">
-<meta property="og:description" content="在vue项目中直接引入highlight.js会遇到一些问题，官方论坛上的一篇帖子给出了出现这种现象的原因，即vue-router在改变路由的时候会清除渲染,并移除事件参考了答案后，得出了用vue的自定义指令(directive)解决问题的方法：123456import hljs from &apos;highlight.js&apos;//还需要引入hljs的主题css，此处略过Vue.directive(&apos;hig">
-<meta property="og:updated_time" content="2017-02-21T15:21:15.000Z">
+<meta property="og:description" content="在Vue项目中直接引入highlight.js会遇到一些问题，官方论坛上的一篇帖子给出了出现这种现象的原因，即vue-router在改变路由的时候会清除渲染,并移除事件参考了答案后，得出了用vue的自定义指令(directive)解决问题的方法：123456import hljs from &apos;highlight.js&apos;//还需要引入hljs的主题css，此处略过Vue.directive(&apos;hig">
+<meta property="og:updated_time" content="2017-02-21T17:21:58.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="vue自定义指令实现Highlight.js高亮代码">
-<meta name="twitter:description" content="在vue项目中直接引入highlight.js会遇到一些问题，官方论坛上的一篇帖子给出了出现这种现象的原因，即vue-router在改变路由的时候会清除渲染,并移除事件参考了答案后，得出了用vue的自定义指令(directive)解决问题的方法：123456import hljs from &apos;highlight.js&apos;//还需要引入hljs的主题css，此处略过Vue.directive(&apos;hig">
+<meta name="twitter:title" content="Vue自定义指令实现Highlight.js高亮代码">
+<meta name="twitter:description" content="在Vue项目中直接引入highlight.js会遇到一些问题，官方论坛上的一篇帖子给出了出现这种现象的原因，即vue-router在改变路由的时候会清除渲染,并移除事件参考了答案后，得出了用vue的自定义指令(directive)解决问题的方法：123456import hljs from &apos;highlight.js&apos;//还需要引入hljs的主题css，此处略过Vue.directive(&apos;hig">
   
     <link rel="alternate" href="/atom.xml" title="Bonfire" type="application/atom+xml">
   
@@ -146,7 +146,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-vue自定义指令实现Highlight-js高亮代码" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-Vue自定义指令实现Highlight-js高亮代码" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -154,7 +154,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      vue自定义指令实现Highlight.js高亮代码
+      Vue自定义指令实现Highlight.js高亮代码
     </h1>
   
 
@@ -162,7 +162,7 @@
     
     <div class="article-meta">
       
-	<a href="/2016/07/21/vue自定义指令实现Highlight-js高亮代码/" class="article-date">
+	<a href="/2016/07/21/Vue自定义指令实现Highlight-js高亮代码/" class="article-date">
 	  <time datetime="2016-07-21T14:58:05.000Z" itemprop="datePublished">2016-07-21</time>
 	</a>
 
@@ -172,7 +172,7 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在vue项目中直接引入highlight.js会遇到一些问题，<a href="https://forum.vuejs.org/topic/3514/getting-highlightjs-to-work-with-vue-router" target="_blank" rel="external">官方论坛</a>上的一篇帖子给出了出现这种现象的原因，即vue-router在改变路由的时候会清除渲染,并移除事件<br>参考了答案后，得出了用vue的自定义指令(directive)解决问题的方法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> hljs <span class="keyword">from</span> <span class="string">'highlight.js'</span></div><div class="line"><span class="comment">//还需要引入hljs的主题css，此处略过</span></div><div class="line">Vue.directive(<span class="string">'highlight'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">let</span> blocks = <span class="keyword">this</span>.el.querySelectorAll(<span class="string">'pre code'</span>)</div><div class="line">    <span class="built_in">Array</span>.prototype.forEach.call(blocks, hljs.highlightBlock)</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+        <p>在Vue项目中直接引入highlight.js会遇到一些问题，<a href="https://forum.vuejs.org/topic/3514/getting-highlightjs-to-work-with-vue-router" target="_blank" rel="external">官方论坛</a>上的一篇帖子给出了出现这种现象的原因，即vue-router在改变路由的时候会清除渲染,并移除事件<br>参考了答案后，得出了用vue的自定义指令(directive)解决问题的方法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> hljs <span class="keyword">from</span> <span class="string">'highlight.js'</span></div><div class="line"><span class="comment">//还需要引入hljs的主题css，此处略过</span></div><div class="line">Vue.directive(<span class="string">'highlight'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">let</span> blocks = <span class="keyword">this</span>.el.querySelectorAll(<span class="string">'pre code'</span>)</div><div class="line">    <span class="built_in">Array</span>.prototype.forEach.call(blocks, hljs.highlightBlock)</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
 <p>补充：Vue 2中，自定义指令的API发生了一些变化，需要用这样的写法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Vue.directive(<span class="string">'highlight'</span>, </div><div class="line">    <span class="attr">bind</span>: <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">        <span class="keyword">let</span> blocks = <span class="keyword">this</span>.el.querySelectorAll(<span class="string">'pre code'</span>)</div><div class="line">        <span class="built_in">Array</span>.prototype.forEach.call(blocks, hljs.highlightBlock)</div><div class="line">    &#125;</div><div class="line">)</div></pre></td></tr></table></figure></p>
 <p>设置好自定义指令后，在标签里使用指令<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-highlight</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">pre</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">code</span> <span class="attr">class</span>=<span class="string">'可以在这里手动指定语言'</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">code</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">pre</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <p>补充2: 利用上面的原理，我写了一个简单的插件<a href="https://github.com/SunskyXH/vue-hljs" target="_blank" rel="external">vue-hljs</a>，安装完并引入依赖以后，简单的<code>Vue.use(vueHljs)</code>就可以使用v-highlight去高亮代码了。</p>
@@ -182,12 +182,26 @@
     <footer class="article-footer">
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/">vue</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
 
     </footer>
   </div>
   
     
+<nav id="article-nav">
+  
+    <a href="/2017/02/22/GraphQL-Relay初探/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          GraphQL初探
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
   
 </article>
 
