@@ -12,18 +12,18 @@
   
   
   <meta name="description" content="GraphQL简介GraphQL是Facebook开源的一套用于API的查询语言和runtime，其比较明显的特色在于用一次请求拿到所有想要的数据，并且返回的查询结果与想要查询的格式一致。
-Query, Mutation, Schemas, Types12345678&amp;#123;    hero &amp;#123;        name        friends&amp;#123;">
+Query/Mutation12345678&amp;#123;    hero &amp;#123;        name        friends&amp;#123;            name        &amp;#125">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GraphQL+Relay初探">
 <meta property="og:url" content="http://yoursite.com/2017/02/22/GraphQL-Relay初探/index.html">
 <meta property="og:site_name" content="Bonfire">
 <meta property="og:description" content="GraphQL简介GraphQL是Facebook开源的一套用于API的查询语言和runtime，其比较明显的特色在于用一次请求拿到所有想要的数据，并且返回的查询结果与想要查询的格式一致。
-Query, Mutation, Schemas, Types12345678&amp;#123;    hero &amp;#123;        name        friends&amp;#123;">
-<meta property="og:updated_time" content="2017-02-21T18:19:40.000Z">
+Query/Mutation12345678&amp;#123;    hero &amp;#123;        name        friends&amp;#123;            name        &amp;#125">
+<meta property="og:updated_time" content="2017-02-22T12:51:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GraphQL+Relay初探">
 <meta name="twitter:description" content="GraphQL简介GraphQL是Facebook开源的一套用于API的查询语言和runtime，其比较明显的特色在于用一次请求拿到所有想要的数据，并且返回的查询结果与想要查询的格式一致。
-Query, Mutation, Schemas, Types12345678&amp;#123;    hero &amp;#123;        name        friends&amp;#123;">
+Query/Mutation12345678&amp;#123;    hero &amp;#123;        name        friends&amp;#123;            name        &amp;#125">
   
     <link rel="alternate" href="/atom.xml" title="Bonfire" type="application/atom+xml">
   
@@ -176,13 +176,13 @@ Query, Mutation, Schemas, Types12345678&amp;#123;    hero &amp;#123;        name
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="GraphQL简介"><a href="#GraphQL简介" class="headerlink" title="GraphQL简介"></a>GraphQL简介</h3><p>GraphQL是Facebook开源的一套用于API的查询语言和runtime，其比较明显的特色在于用一次请求拿到所有想要的数据，并且返回的查询结果与想要查询的格式一致。</p>
-<h3 id="Query-Mutation-Schemas-Types"><a href="#Query-Mutation-Schemas-Types" class="headerlink" title="Query, Mutation, Schemas, Types"></a>Query, Mutation, Schemas, Types</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    hero &#123;</div><div class="line">        name</div><div class="line">        friends&#123;</div><div class="line">            name</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Query-Mutation"><a href="#Query-Mutation" class="headerlink" title="Query/Mutation"></a>Query/Mutation</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    hero &#123;</div><div class="line">        name</div><div class="line">        friends&#123;</div><div class="line">            name</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>拿一个简单的query来分析，这里的hero，name或者friends叫做field，field会返回的类型type中定义的类型。</p>
 <ul>
 <li>field能通过例如<code>hero(name: &quot;R2-D2&quot;)</code>这样的方式来添加参数</li>
 <li>多个同级同类型的field能通过例如<code>empireHero: hero</code> 来指定别名</li>
 <li>多个filed要查询相同类型的数据时，可以用碎片(fragments)来复用相同的查询条件</li>
-<li>当遇到多个查询需要带上不同的参数时，可以使用变量</li>
+<li>当遇到多个查询需要带上不同的参数时，可以使用变量 </li>
 <li><p>可以用指令(directive)去动态的改变query的结构和形状，如<code>@include(if: Boolean)</code> <code>@skip(if: Boolean)</code><br>结合前面几点，就可能有了这样一个query</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">query Hero($episode: Episode, $withFriends: Boolean!) &#123;</div><div class="line">  hero(episode: $episode) &#123;</div><div class="line">    name</div><div class="line">    friends @include(if: $withFriends) &#123;</div><div class="line">      name</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">//当输入以下变量</div><div class="line">&#123;</div><div class="line">  "episode": "JEDI",</div><div class="line">  "withFriends": false</div><div class="line">&#125;</div><div class="line">//返回结果</div><div class="line">&#123;</div><div class="line">  "data": &#123;</div><div class="line">    "hero": &#123;</div><div class="line">      "name": "R2-D2"</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
@@ -197,6 +197,7 @@ Query, Mutation, Schemas, Types12345678&amp;#123;    hero &amp;#123;        name
 </li>
 </ul>
 <p>这样返回结果里的__typename就会是这个查询结果的type的名字了(此例中可能为Human、Droid或者Starship)</p>
+<h3 id="Schemas-Types"><a href="#Schemas-Types" class="headerlink" title="Schemas/Types"></a>Schemas/Types</h3><p>上一节中提到了许多次type，type即我们想要查询的field的类型，用于描述我们想要的数据</p>
 <h3 id="GraphQL对比RESTful"><a href="#GraphQL对比RESTful" class="headerlink" title="GraphQL对比RESTful"></a>GraphQL对比RESTful</h3><p>一万个人心中有一万种RESTful，RESTful虽然简单易理解，但是在深入开发的过程中其难扩展的缺点逐渐暴露了出来。</p>
 <p>例如前面官网上的例子，GraphQL会直接返回这样的结果<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"data"</span>: &#123;</div><div class="line">        <span class="attr">"hero"</span>: &#123;</div><div class="line">            <span class="attr">"name"</span>: <span class="string">"Luke Skywalker"</span></div><div class="line">            <span class="string">"friends"</span>: [</div><div class="line">                &#123; <span class="attr">"name"</span>: <span class="string">"Han Solo"</span> &#125;,</div><div class="line">                &#123; <span class="attr">"name"</span>: <span class="string">"R2-D2"</span> &#125;,</div><div class="line">                &#123; <span class="attr">"name"</span>: <span class="string">"Leia Organa"</span> &#125;,</div><div class="line">            ]</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>而RESTful，可能有人会这样写<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /hero/ and GET /hero/加上前一次查询返回的id/friends/</div></pre></td></tr></table></figure></p>
@@ -206,6 +207,34 @@ Query, Mutation, Schemas, Types12345678&amp;#123;    hero &amp;#123;        name
       
     </div>
     <footer class="article-footer">
+      
+        
+	<section id="comments" class="comment">
+	  <div id="disqus_thread">
+	  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	  </div>
+	</section>
+
+	<script type="text/javascript">
+	var disqus_shortname = 'bonfire-1';
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	</script>
+
+
+
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GraphQL/">GraphQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Relay/">Relay</a></li></ul>
@@ -233,7 +262,7 @@ Query, Mutation, Schemas, Types12345678&amp;#123;    hero &amp;#123;        name
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#GraphQL简介"><span class="toc-number">1.</span> <span class="toc-text">GraphQL简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Query-Mutation-Schemas-Types"><span class="toc-number">2.</span> <span class="toc-text">Query, Mutation, Schemas, Types</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GraphQL对比RESTful"><span class="toc-number">3.</span> <span class="toc-text">GraphQL对比RESTful</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#GraphQL简介"><span class="toc-number">1.</span> <span class="toc-text">GraphQL简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Query-Mutation"><span class="toc-number">2.</span> <span class="toc-text">Query/Mutation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Schemas-Types"><span class="toc-number">3.</span> <span class="toc-text">Schemas/Types</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GraphQL对比RESTful"><span class="toc-number">4.</span> <span class="toc-text">GraphQL对比RESTful</span></a></li></ol>
     
     </div>
   </aside>
