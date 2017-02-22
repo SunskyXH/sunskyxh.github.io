@@ -188,34 +188,58 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="GraphQL简介"><a href="#GraphQL简介" class="headerlink" title="GraphQL简介"></a>GraphQL简介</h3><p>GraphQL是Facebook开源的一套用于API的查询语言和runtime，其比较明显的特色在于用一次请求拿到所有想要的数据，并且返回的查询结果与想要查询的格式一致。</p>
-<h3 id="Query-Mutation"><a href="#Query-Mutation" class="headerlink" title="Query/Mutation"></a>Query/Mutation</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    hero &#123;</div><div class="line">        name</div><div class="line">        friends&#123;</div><div class="line">            name</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>拿一个简单的query来分析，这里的hero，name或者friends叫做field，field会返回的类型type中定义的类型。</p>
+        <h3 id="GraphQL简介"><a href="#GraphQL简介" class="headerlink" title="GraphQL简介"></a>GraphQL简介</h3><p>GraphQL是Facebook开源的一套用于API的查询语言和runtime，其比较明显的特色在于用一次请求拿到所有想要的数据，并且返回的查询结果与想要查询的格式一致。同时也强调了强类型，减少冗余。</p>
+<h3 id="Query-Mutation"><a href="#Query-Mutation" class="headerlink" title="Query/Mutation"></a>Query/Mutation</h3><p>(后文大部分例子皆来自/魔改自官方文档)<br>拿一个如下的简单的query来分析，这里的hero，name或者friends叫做<code>field</code>，field会返回type中定义的类型。</p>
 <ul>
 <li>field能通过例如<code>hero(name: &quot;R2-D2&quot;)</code>这样的方式来添加参数</li>
 <li>多个同级同类型的field能通过例如<code>empireHero: hero</code> 来指定别名</li>
 <li>多个filed要查询相同类型的数据时，可以用碎片(fragments)来复用相同的查询条件</li>
 <li>当遇到多个查询需要带上不同的参数时，可以使用变量 </li>
-<li><p>可以用指令(directive)去动态的改变query的结构和形状，如<code>@include(if: Boolean)</code> <code>@skip(if: Boolean)</code><br>结合前面几点，就可能有了这样一个query</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">query Hero($episode: Episode, $withFriends: Boolean!) &#123;</div><div class="line">  hero(episode: $episode) &#123;</div><div class="line">    name</div><div class="line">    friends @include(if: $withFriends) &#123;</div><div class="line">      name</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">//当输入以下变量</div><div class="line">&#123;</div><div class="line">  "episode": "JEDI",</div><div class="line">  "withFriends": false</div><div class="line">&#125;</div><div class="line">//返回结果</div><div class="line">&#123;</div><div class="line">  "data": &#123;</div><div class="line">    "hero": &#123;</div><div class="line">      "name": "R2-D2"</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li><p>可以用指令(directive)去动态的改变query的结构和形状，如<code>@include(if: Boolean)</code> <code>@skip(if: Boolean)</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">query Hero($episode: Episode, $withFriends: Boolean!) &#123;</div><div class="line">  hero(episode: $episode) &#123;</div><div class="line">    name</div><div class="line">    friends @include(if: $withFriends) &#123;</div><div class="line">      name</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 <li><p>GraphQL不只是提供了获得数据的方式，也提供了Mutation去修改服务端的数据</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">mutation CreateReviewForEpisode($ep: Episode!, $review: ReviewInput!) &#123;</div><div class="line">  createReview(episode: $ep, review: $review) &#123;</div><div class="line">    stars</div><div class="line">    commentary</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
-<li><p>GraphQL的schemas能定义接口和结合(union)的type，因此当query中的field在schema中对应这些type时，你需要内联碎片(inline fragments)去获取混合(concrete)type之下的数据。<br>例如 hero这个field本来对应的type为Character，如果这个hero是Droid类型，则会返回primaryFunction，如果为Human类型，则会返回height。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">query HeroForEpisode($ep: Episode!) &#123;</div><div class="line">  hero(episode: $ep) &#123;</div><div class="line">    name</div><div class="line">    ... on Droid &#123;</div><div class="line">      primaryFunction</div><div class="line">    &#125;</div><div class="line">    ... on Human &#123;</div><div class="line">      height</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li><p>GraphQL的schemas能定义接口和结合(union)的type，因此当query中的field在schema中对应这些type时，你需要内联碎片(inline fragments)去获取混合(concrete)type之下的数据。</p>
 </li>
-<li><p>当不知道服务器返回的type时，可以用meta field去代替</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  search(text: &quot;an&quot;) &#123;</div><div class="line">    __typename</div><div class="line">    ... on Human &#123;</div><div class="line">      name</div><div class="line">    &#125;</div><div class="line">    ... on Droid &#123;</div><div class="line">      name</div><div class="line">    &#125;</div><div class="line">    ... on Starship &#123;</div><div class="line">      name</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li>当不知道服务器返回的type时，可以用meta field去代替,即在field前加上<code>__</code><br>例如 我们要查询带有’an’的数据，同时也不知道返回的数据的type，如果这个返回的数据的type是Droid，则会同时返回primaryFunction，如果为Human类型，则会返回height。此外返回结果里的__typename就会是这个查询结果的type的名字了(此例中可能为Human、Droid或者Starship)<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  search(text: &quot;an&quot;) &#123;</div><div class="line">    __typename</div><div class="line">    ... on Human &#123;</div><div class="line">      height</div><div class="line">    &#125;</div><div class="line">    ... on Droid &#123;</div><div class="line">      primaryFunction</div><div class="line">    &#125;</div><div class="line">    ... on Starship &#123;</div><div class="line">      name</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>这样返回结果里的__typename就会是这个查询结果的type的名字了(此例中可能为Human、Droid或者Starship)</p>
-<h3 id="Schemas-Types"><a href="#Schemas-Types" class="headerlink" title="Schemas/Types"></a>Schemas/Types</h3><p>上一节中提到了许多次type，type即我们想要查询的field的类型，用于描述我们想要的数据</p>
+<h3 id="Types-Schemas"><a href="#Types-Schemas" class="headerlink" title="Types/Schemas"></a>Types/Schemas</h3><p>上一节中提到了许多次type，<code>type</code>即我们想要查询的field的类型，用于描述我们想要的数据。属于schema中最基础的一类</p>
+<p>每一个<code>GarphQL Service</code>定义了一系列的type用于完全描述一系列可能会被查询到的数据。当query来的时候，GraphQL Service会根据schema去验证并执行。</p>
+<p>GraphQL Service可以用<code>任何语言</code>去编写。同时还有一种叫做”GraphQL schema language”的语言用于描述schema。</p>
+<p>一个简单的定义名为Character的type的例子</p>
+<ul>
+<li>name，appearsIn和length为该type的field</li>
+<li>field的type后面的!表示该field不可为null</li>
+<li>appearsIn: [Episode]表示对应这个appearsIn对应的是一个Episode类型的数据的数组</li>
+<li>schema中的参数必须有名字，等号前的为参数的type，后面的为默认值</li>
+<li><p>一些基本的type：<code>Int</code> <code>Float</code> <code>String</code> <code>Boolean</code> <code>ID</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">type Character &#123;</div><div class="line">    name: String!</div><div class="line">    appearsIn: [Episode]!</div><div class="line">    height(unit: LengthUnit = METER): Float</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>纯量(scalar)：经常作为query的叶结点，例如最前面的query例子里的name。可以用scalar去声明一个纯量 <code>scalar Date</code></p>
+</li>
+<li><p>枚举(enum)：枚举是一种特殊的纯量，他被限制为一个特定允许值的集合。这个特性可以拿来做验证或者利用一个有限集合的值来在type系统之间传送，可以用如下方式声明,Episode一定会为NEWHOPE、EMPIRE、和JEDI其中之一</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">enum Episode &#123;</div><div class="line">  NEWHOPE</div><div class="line">  EMPIRE</div><div class="line">  JEDI</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>接口(interface)：像许多强类型语言一样，GraphQL也提供了接口，即包含了type必须实现的、确定的、field的集合的抽象的type。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">interface Character &#123;</div><div class="line">  id: ID!</div><div class="line">  name: String!</div><div class="line">  friends: [Character]</div><div class="line">  appearsIn: [Episode]!</div><div class="line">&#125;</div><div class="line">type Human implements Character &#123;</div><div class="line">  id: ID!</div><div class="line">  name: String!</div><div class="line">  friends: [Character]</div><div class="line">  appearsIn: [Episode]!</div><div class="line">  starships: [Starship]</div><div class="line">  totalCredits: Int</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>结合(union)：结合和接口非常类似，只是没有具体说明type之间的共同field，即没有将type的具体属性抽象出来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">union SearchResult = Human | Droid | Starship</div></pre></td></tr></table></figure>
+</li>
+<li><p>输入(input)：当你可能要传递整个对象(例如参数为一个对象时)，需要指定这个对象的type，就可以使用input。简单的把type换成input即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">input ReviewInput &#123;</div><div class="line">  stars: Int!</div><div class="line">  commentary: String</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>上面就是GraphQL中一些基础概念，更加进阶的概念会在以后的文章中提到。</p>
 <h3 id="GraphQL对比RESTful"><a href="#GraphQL对比RESTful" class="headerlink" title="GraphQL对比RESTful"></a>GraphQL对比RESTful</h3><p>一万个人心中有一万种RESTful，RESTful虽然简单易理解，但是在深入开发的过程中其难扩展的缺点逐渐暴露了出来。</p>
 <p>例如前面官网上的例子，GraphQL会直接返回这样的结果<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"data"</span>: &#123;</div><div class="line">        <span class="attr">"hero"</span>: &#123;</div><div class="line">            <span class="attr">"name"</span>: <span class="string">"Luke Skywalker"</span></div><div class="line">            <span class="string">"friends"</span>: [</div><div class="line">                &#123; <span class="attr">"name"</span>: <span class="string">"Han Solo"</span> &#125;,</div><div class="line">                &#123; <span class="attr">"name"</span>: <span class="string">"R2-D2"</span> &#125;,</div><div class="line">                &#123; <span class="attr">"name"</span>: <span class="string">"Leia Organa"</span> &#125;,</div><div class="line">            ]</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>而RESTful，可能有人会这样写<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /hero/ and GET /hero/加上前一次查询返回的id/friends/</div></pre></td></tr></table></figure></p>
-<p>或者<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /heros?query=friends</div></pre></td></tr></table></figure></p>
-<p>这种情景下，RESTful可能会去发送多次请求，或者把请求弄的不那么直观</p>
+<p>而RESTful，可能有人会这样写<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">GET /hero/ </div><div class="line">#之后遍历返回的信息，并发送新请求</div><div class="line">GET /hero/加上前一次查询返回的name/friends/</div></pre></td></tr></table></figure></p>
+<p>或者<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /heros?extend_query=friends</div></pre></td></tr></table></figure></p>
+<p>这种情景下，RESTful可能会去发送多次请求，或者把请求魔改得不直观。GraphQL恰恰能很好的解决这类问题。</p>
+<h3 id="Relay简介"><a href="#Relay简介" class="headerlink" title="Relay简介"></a>Relay简介</h3><p>Relay是一个用于构建数据驱动的React应用的框架，结合GraphQL可以实现用GraphQL声明需要的数据，Relay指明在什么时机用什么方法去获取数据。<br>Relay还能综合所有query，利用高效的网络请求去获取你恰好需要的数据，也能结合GraphQL的mutation去修改客户端/服务端上的数据，并且同时提供了自动化的连贯的数据更新机制和错误处理机制。</p>
 
       
     </div>
@@ -240,7 +264,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2016/07/21/vue自定义指令实现Highlight-js高亮代码/">vue自定义指令实现Highlight.js高亮代码</a>
+      <a class="article-title" href="/2016/09/10/vue自定义指令实现Highlight-js高亮代码/">vue自定义指令实现Highlight.js高亮代码</a>
     </h1>
   
 
@@ -248,8 +272,8 @@
     
     <div class="article-meta">
       
-	<a href="/2016/07/21/vue自定义指令实现Highlight-js高亮代码/" class="article-date">
-	  <time datetime="2016-07-21T14:58:05.000Z" itemprop="datePublished">2016-07-21</time>
+	<a href="/2016/09/10/vue自定义指令实现Highlight-js高亮代码/" class="article-date">
+	  <time datetime="2016-09-10T14:58:05.000Z" itemprop="datePublished">2016-09-10</time>
 	</a>
 
       
@@ -262,6 +286,81 @@
 <p>补充：Vue 2中，自定义指令的API发生了一些变化，需要用这样的写法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Vue.directive(<span class="string">'highlight'</span>, &#123;</div><div class="line">    <span class="attr">bind</span>: <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</div><div class="line">        <span class="keyword">let</span> blocks = <span class="keyword">this</span>.el.querySelectorAll(<span class="string">'pre code'</span>)</div><div class="line">        <span class="built_in">Array</span>.prototype.forEach.call(blocks, hljs.highlightBlock)</div><div class="line">    &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
 <p>设置好自定义指令后，在标签里使用指令<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-highlight</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">pre</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">code</span> <span class="attr">class</span>=<span class="string">'可以在这里手动指定语言'</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">code</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">pre</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <p>补充2: 利用上面的原理，我写了一个简单的插件<a href="https://github.com/SunskyXH/vue-hljs" target="_blank" rel="external">vue-hljs</a>，安装完并引入依赖以后，简单的<code>Vue.use(vueHljs)</code>就可以使用v-highlight去高亮代码了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <article id="post-The-State-of-Vue-自译"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2016/08/20/The-State-of-Vue-自译/">The State of Vue(自译)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2016/08/20/The-State-of-Vue-自译/" class="article-date">
+	  <time datetime="2016-08-20T15:11:09.000Z" itemprop="datePublished">2016-08-20</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/front-end/">front-end</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<h3 id="2-0-is-now-in-RC"><a href="#2-0-is-now-in-RC" class="headerlink" title="2.0 is now in RC!"></a>2.0 is now in RC!</h3><p>We announced Vue 2.0 back in April,<br>and today I am very excited to release the first release candidate for Vue 2.0!<br>From this stage on we will be in API freeze and there will be no more breaking changes before official release.</p>
+</blockquote>
+<h3 id="2-0-正在候选发布-RC-！"><a href="#2-0-正在候选发布-RC-！" class="headerlink" title="2.0 正在候选发布(RC)！"></a>2.0 正在候选发布(RC)！</h3><p>我们在四月的时候宣布了<a href="https://medium.com/the-vue-point/announcing-vue-js-2-0-8af1bde7ab9" target="_blank" rel="external">Vue 2.0的消息</a>,<br>并且在今天我将非常激动地发布<a href="https://github.com/vuejs/vue/releases/tag/v2.0.0-rc.1" target="_blank" rel="external">Vue 2.0的第一个RC版本！</a><br>从这个阶段起我们将会API冻结,并且在官方版本之前将会有更多突破性的改动.<br><br></p>
+<blockquote>
+<p>All the official supporting libraries, e.g. vue-router, vuex, vue-loader &amp; vueify have all been updated to work with Vue 2.0.<br>This means the 2.0 stack is technically complete — the only thing we are waiting for is documentation and release-related logistics.<br>Despite that, we have prepared a Vue 2.0 RC Starter Resources guide to help those feeling adventurous jump right into 2.0 today.</p>
+</blockquote>
+<p>所有官方支持的库，例如vue-router,vuex,vue-loader和vueify都已经升级到能和Vue 2.0一起使用。<br>这意味着2.0在技术层面已经完善——我们唯一在等待的就是文档和发布相关的后续工作<br>尽管如此，我们准备了<a href="https://github.com/vuejs/vue/wiki/Vue-2.0-RC-Starter-Resources" target="_blank" rel="external">Vue 2.0 RC Starter Resources</a><br>指南来帮助那些想要探险的人跳入2.0的大坑。<br><br></p>
+<blockquote>
+<h3 id="Vue-js-in-the-Industry"><a href="#Vue-js-in-the-Industry" class="headerlink" title="Vue.js in the Industry"></a>Vue.js in the Industry</h3><p>I recently answered the question “How Popular is Vue.js in the Industry?” on Quora.<br>You can read about the full answer here, but here are some highlights:</p>
+<ul>
+<li>Based on the combined metrics including Google Trends, GitHub star history &amp; stats.js.org statistics,<br>Vue.js has consistently been one of the fastest growing libraries in the past few months and there’s currently no sign of slowing down.</li>
+<li>1 million+ downloads on NPM at 125k~150k per month<br></li>
+<li>1.5 million page views &amp; 150k monthly unique visitors on vuejs.org<br></li>
+<li>36,000+ weekly active vue-devtool users<br></li>
+<li>Used by great open source projects: Laravel, GitLab, PageKit &amp; more.<br></li>
+<li>Strong international adoption: biggest Chinese public companies (Alibaba, Baidu, Tencent), biggest Chinese unicorns (private companies with $1B+ valuation — Xiaomi, Didi Chuxing, DJI, Ele.me), established enterprises in Japan/UK (Line, Nintendo, Sainsbury’s)</li>
+</ul>
+</blockquote>
+<h3 id="业界的Vue-js"><a href="#业界的Vue-js" class="headerlink" title="业界的Vue.js"></a>业界的Vue.js</h3><p>我最近在Quora上回答了“Vue在业界有多流行?”的问题. 你可以在这里看到全部的答案, 当然你也可以只看以下几点:</p>
+<ul>
+<li>根据结合了包括 Google Trends, Github star历史记录以及 stats.js.org统计数据在内的度量结果, Vue.js在过去几个月内连续保持增长最快速的库之一,并且现在毫无减弱的迹象.</li>
+<li>NPM上有100万次以上的下载, 每月12.5到15万.</li>
+<li>vuejs.org访问量达150万, 每月有15万不同的访客.</li>
+<li>vue-devtool 每月有36万以上的活跃用户.</li>
+<li>被大型开源项目所用：例如 Laravel, GitLab, PageKit 等等.</li>
+<li>国际上广为采用: 例如 中国最大的公司(阿里巴巴,腾讯,百度),中国最大的独角兽公司(具有一亿以上资产的私有公司——小米,滴滴出行,大疆,饿了么),设立在日本/英国的企业(Line,任天堂,森宝利)<br></li>
+</ul>
+<blockquote>
+<h3 id="Patreon-Campaign-Going-Strong"><a href="#Patreon-Campaign-Going-Strong" class="headerlink" title="Patreon Campaign Going Strong"></a>Patreon Campaign Going Strong</h3><p>The Vue.js patreon campign now has over $8,000 monthly pledge from the community and sponsors.<br>It is absolutely amazing to be able to work full-time on an open source project that I am genuinely passionate about, and for that I am forever grateful to all the supporters.<br></p>
+<h3 id="Patreon-Campaign-让我们更加壮大"><a href="#Patreon-Campaign-让我们更加壮大" class="headerlink" title="Patreon Campaign 让我们更加壮大"></a>Patreon Campaign 让我们更加壮大</h3><p>Vue.js patreon campign现在已经有了每月从社区和赞助者处得到的$8,000的赞助.<br>能全职投入到一个我真正为之狂热的开源项目中当然是令人惊讶的, 因此我永远感谢那些支持我的人.<br>I think the Vue.js patreon campaign is an interesting experiment on sustainable financial models for open source projects that demand serious commitment: it’s open source not as the by-product of a commercial company trying to help with recruiting — the only goal of the project is to create something that help more people get more things done in an easier and faster way. It’s sustained not by revenue that possibly has nothing to do with the project itself, but rather directly by those who use it in their everyday work. To be honest, I don’t think this is a model that is easy to pull off (for that I am very lucky), but I do hope it can serve as a valuable case study for those who are interested in more sustainable open source work.</p>
+</blockquote>
+<p>我认为Vue.js patreon campign 是一个对需要严肃承诺的开源项目的可持续金融模型上有趣的实验: 它不是因为作为商业公司用来招聘的副产品而开源——这个项目的唯一目标就是创造一些能够帮助更多的人用更简单快捷的方法做更多事情的东西. 它可持续不是因为那些可能对项目本身无益的收入,而是直接因为那些每天都在工作中都在用到它的人.讲真, 我不认为这是一个能轻松推广的模型(所以说我很幸运), 但我衷心希望它能够作为一个对致力于更加可持续开源项目的人来说有价值的案例而服务.</p>
 
       
     </div>
