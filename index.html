@@ -239,6 +239,8 @@
 <p>而RESTful，可能有人会这样写<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">GET /hero/ </div><div class="line">#之后遍历返回的信息，并发送新请求</div><div class="line">GET /hero/加上前一次查询返回的name/friends/</div></pre></td></tr></table></figure></p>
 <p>或者<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /heros?extend_query=friends</div></pre></td></tr></table></figure></p>
 <p>这种情景下，RESTful可能会去发送多次请求，或者把请求魔改得不直观。GraphQL恰恰能很好的解决这类问题。</p>
+<p>同时我们也看到了，GraphQL在一定程度上，查询请求是不依赖url的，这也许意味着当系统要添加新的功能，同时需要的数据能用之前的数据组装，就不需要新的后台接口了。</p>
+<p>此外，若是后台能将数据拆分，提供大量的原子数据接口的话，那么对于产品版本迅速迭代将是一件非常有意义的事情。</p>
 <h3 id="Relay简介"><a href="#Relay简介" class="headerlink" title="Relay简介"></a>Relay简介</h3><p><img src="http://olu3hx27t.bkt.clouddn.com/image/relay.png" alt=""><br>Relay是一个用于构建数据驱动的React应用的框架，结合GraphQL可以实现用GraphQL声明需要的数据，Relay指明在什么时机用什么方法去获取数据。<br>Relay还能综合所有query，利用高效的网络请求去获取你恰好需要的数据，也能结合GraphQL的mutation去修改客户端/服务端上的数据，并且同时提供了自动化的连贯的数据更新机制和错误处理机制。</p>
 
       
