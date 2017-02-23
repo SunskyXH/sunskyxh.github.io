@@ -21,7 +21,7 @@
   
     <link rel="alternate" href="/atom.xml" title="Bonfire" type="application/atom+xml">
   
-  <link rel="icon" href="/css/images/sun.png">
+  <link rel="icon" href="/http://olu3hx27t.bkt.clouddn.com/image/sun.png">
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
@@ -57,7 +57,7 @@
   
     <div id="intrologo" class="intro-logo" style="background-position:center; background-repeat:no-repeat; background-image: url(); background-size: auto 100%;">
     <script>
-        var imgUrls = "css/images/solar.jpg".split(",");
+        var imgUrls = "http://olu3hx27t.bkt.clouddn.com/image/solar.jpg".split(",");
         var random = Math.floor((Math.random() * imgUrls.length ));
         if (imgUrls[random].startsWith('http') || imgUrls[random].indexOf('://') >= 0) {
           document.getElementById("intrologo").style.backgroundImage='url(' + imgUrls[random] + ')';
@@ -188,7 +188,7 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="GraphQL简介"><a href="#GraphQL简介" class="headerlink" title="GraphQL简介"></a>GraphQL简介</h3><p>GraphQL是Facebook开源的一套用于API的查询语言和runtime，其比较明显的特色在于用一次请求拿到所有想要的数据，并且返回的查询结果与想要查询的格式一致。同时也强调了强类型，减少冗余。</p>
+        <h3 id="GraphQL简介"><a href="#GraphQL简介" class="headerlink" title="GraphQL简介"></a>GraphQL简介</h3><p><img src="http://olu3hx27t.bkt.clouddn.com/image/graphql.png" alt=""><br>GraphQL是Facebook开源的一套用于API的查询语言和runtime，其比较明显的特色在于用一次请求拿到所有想要的数据，并且返回的查询结果与想要查询的格式一致。同时也强调了强类型，减少冗余。</p>
 <h3 id="Query-Mutation"><a href="#Query-Mutation" class="headerlink" title="Query/Mutation"></a>Query/Mutation</h3><p>(后文大部分例子皆来自/魔改自官方文档)<br>拿一个如下的简单的query来分析，这里的hero，name或者friends叫做<code>field</code>，field会返回type中定义的类型。</p>
 <ul>
 <li>field能通过例如<code>hero(name: &quot;R2-D2&quot;)</code>这样的方式来添加参数</li>
@@ -239,7 +239,7 @@
 <p>而RESTful，可能有人会这样写<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">GET /hero/ </div><div class="line">#之后遍历返回的信息，并发送新请求</div><div class="line">GET /hero/加上前一次查询返回的name/friends/</div></pre></td></tr></table></figure></p>
 <p>或者<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET /heros?extend_query=friends</div></pre></td></tr></table></figure></p>
 <p>这种情景下，RESTful可能会去发送多次请求，或者把请求魔改得不直观。GraphQL恰恰能很好的解决这类问题。</p>
-<h3 id="Relay简介"><a href="#Relay简介" class="headerlink" title="Relay简介"></a>Relay简介</h3><p>Relay是一个用于构建数据驱动的React应用的框架，结合GraphQL可以实现用GraphQL声明需要的数据，Relay指明在什么时机用什么方法去获取数据。<br>Relay还能综合所有query，利用高效的网络请求去获取你恰好需要的数据，也能结合GraphQL的mutation去修改客户端/服务端上的数据，并且同时提供了自动化的连贯的数据更新机制和错误处理机制。</p>
+<h3 id="Relay简介"><a href="#Relay简介" class="headerlink" title="Relay简介"></a>Relay简介</h3><p><img src="http://olu3hx27t.bkt.clouddn.com/image/relay.png" alt=""><br>Relay是一个用于构建数据驱动的React应用的框架，结合GraphQL可以实现用GraphQL声明需要的数据，Relay指明在什么时机用什么方法去获取数据。<br>Relay还能综合所有query，利用高效的网络请求去获取你恰好需要的数据，也能结合GraphQL的mutation去修改客户端/服务端上的数据，并且同时提供了自动化的连贯的数据更新机制和错误处理机制。</p>
 
       
     </div>
