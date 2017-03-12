@@ -170,7 +170,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/02/26/preact-virtual-DOM-algorithm-explore/">preact虚拟DOM算法探究</a>
+      <a class="article-title" href="/2017/02/26/preact-virtual-DOM-algorithm-explore/">Preact Virtual DOM算法探究</a>
     </h1>
   
 
@@ -188,7 +188,17 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="Preact"><a href="#Preact" class="headerlink" title="Preact"></a>Preact</h3><p><img src="http://olu3hx27t.bkt.clouddn.com/image/preact.png?imageView2/2/w/200/h/100" alt=""><br>Preact是一个react轻量化的库，整个库大小只有3kb，相比其他react轻量化的方案，如25kb的<a href="https://github.com/Lucifier129/react-lite" target="_blank" rel="external">react-lite</a>，preact确实在体积上有着很大的优势。官网也号称自己可能是最薄的一层虚拟DOM实现。<br>Preact也能兼容react的组件，只需要绑定一个preact-compat兼容层就能使用react组件；preact自己也有着规模不小的生态圈。<br>同时官网也宣称preact有着一个简单的可预测的diff算法实现使他成为最快的虚拟DOM框架之一。接下来本文将简单探究一下preact的虚拟DOM算法（先挖个坑）</p>
+        <h3 id="Preact简介"><a href="#Preact简介" class="headerlink" title="Preact简介"></a>Preact简介</h3><p><img src="http://olu3hx27t.bkt.clouddn.com/image/preact.png?imageView2/2/w/200/h/100" alt=""><br>Preact是一个React轻量化的库，整个库大小只有3kb，相比其他react轻量化的方案，如25kb的<a href="https://github.com/Lucifier129/react-lite" target="_blank" rel="external">react-lite</a>，Preact在体积上有着很大的优势。<br>Preact有着和React相似的API，大部分情况下能兼容React的组件，只需要绑定一个preact-compat兼容层就能解决很多兼容问题。类似React的生态圈，Preact自己也有着规模不小的生态圈。<br>同时官网也宣称Preact有着一个简单却高效的diff算法实现使他成为最快的虚拟DOM框架之一，官网也号称自己可能是最薄的一层虚拟DOM实现。接下来本文将简单探究一下preact的虚拟DOM算法</p>
+<h3 id="Preact的Virtual-DOM实现"><a href="#Preact的Virtual-DOM实现" class="headerlink" title="Preact的Virtual DOM实现"></a>Preact的Virtual DOM实现</h3><p>React使用<code>React.createElement()</code>来实现js转换为Virtual DOM的过程，Preact在这里用了自己的实现方式。<br>Preact的Virtual DOM实现使用了<a href="https://www.npmjs.com/package/babel-plugin-transform-react-jsx" target="_blank" rel="external">babel-plugin-transform-react-jsx</a>，通过pragma注入一个函数<code>preact.h</code>，实现类似下面的转换<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/** @jsx h */</div><div class="line">let foo = &lt;div id=&apos;foo&apos;&gt;Hello&lt;/div&gt;</div><div class="line"></div><div class="line">//After babel transpilation</div><div class="line">var foo = h(&apos;div&apos;, &#123;id: &apos;foo&apos;&#125;, &apos;Hello&apos;);</div></pre></td></tr></table></figure></p>
+<p>Preact利用<code>Preact.h()</code>函数来将转换后的js生成Virtual DOM，之后再利用自己的Virtual DOM算法将其转换为真实的DOM。<br>Preact.h()这个函数为<a href="https://github.com/hyperhype/hyperscript" target="_blank" rel="external">hyperscript</a>的一个简化版，有兴趣的读者可以去了解完整的hyperscript。</p>
+<h3 id="Preact的Virtual-DOM算法"><a href="#Preact的Virtual-DOM算法" class="headerlink" title="Preact的Virtual DOM算法"></a>Preact的Virtual DOM算法</h3><h4 id="创建节点"><a href="#创建节点" class="headerlink" title="创建节点"></a>创建节点</h4><p>关于节点相关的操作算法，大致有以下几种情况</p>
+<h5 id="为组件创建VNode"><a href="#为组件创建VNode" class="headerlink" title="为组件创建VNode"></a>为组件创建VNode</h5><h5 id="为非组件直接创建真实DOM节点"><a href="#为非组件直接创建真实DOM节点" class="headerlink" title="为非组件直接创建真实DOM节点"></a>为非组件直接创建真实DOM节点</h5><h5 id="重复创建子节点"><a href="#重复创建子节点" class="headerlink" title="重复创建子节点"></a>重复创建子节点</h5><h5 id="子节点添加到父节点"><a href="#子节点添加到父节点" class="headerlink" title="子节点添加到父节点"></a>子节点添加到父节点</h5><h5 id="处理子组件"><a href="#处理子组件" class="headerlink" title="处理子组件"></a>处理子组件</h5><h5 id="重复处理所有子节点"><a href="#重复处理所有子节点" class="headerlink" title="重复处理所有子节点"></a>重复处理所有子节点</h5><h5 id="结束处理"><a href="#结束处理" class="headerlink" title="结束处理"></a>结束处理</h5><h4 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h4><h5 id="创建VNode"><a href="#创建VNode" class="headerlink" title="创建VNode"></a>创建VNode</h5><h5 id="引用真实DOM"><a href="#引用真实DOM" class="headerlink" title="引用真实DOM"></a>引用真实DOM</h5><h5 id="完全删除节点"><a href="#完全删除节点" class="headerlink" title="完全删除节点"></a>完全删除节点</h5><h5 id="卸载组件"><a href="#卸载组件" class="headerlink" title="卸载组件"></a>卸载组件</h5><h4 id="DOM-Diff"><a href="#DOM-Diff" class="headerlink" title="DOM Diff"></a>DOM Diff</h4><p>在探索Preact的DOM Diff算法之前，先简单了解一下React的DOM Diff算法：</p>
+<h5 id="React的DOM-Diff算法"><a href="#React的DOM-Diff算法" class="headerlink" title="React的DOM Diff算法"></a>React的DOM Diff算法</h5><p>React的DOM Diff算法在标准Diff算法的基础上改进，将时间复杂度从O(n^3)减少到了O(n)，能做到这样是因为React的diff算法基于了两点假设：</p>
+<blockquote>
+<p>1.Two elements of different types will produce different trees.<br>  两个不同类型的元素会生成不同的DOM树<br>2.The developer can hint at which child elements may be stable across different renders with a key prop.<br>  开发者可以用给子元素加上<code>key</code>这个prop来让其能在多次渲染时保持稳定<br>  (关于第二点，网上部分资料给出的为 对于同一层次的一组子节点，它们可以通过唯一的id进行区分)</p>
+</blockquote>
+<p>其DOM Diff算法主要分为三类情况，tree diff，component diff和element diff。<br>（关于React DOM Diff的文章很多，本文就不在这里赘述）</p>
+<h5 id="Preact的DOM-Diff算法"><a href="#Preact的DOM-Diff算法" class="headerlink" title="Preact的DOM Diff算法"></a>Preact的DOM Diff算法</h5><h3 id="关于具体的性能测试"><a href="#关于具体的性能测试" class="headerlink" title="关于具体的性能测试"></a>关于具体的性能测试</h3><p><a href="http://developit.github.io/js-repaint-perfs/" target="_blank" rel="external">REPAINT RATE CHALLENGE</a><br><a href="https://localvoid.github.io/uibench/" target="_blank" rel="external">UI Benchmark</a></p>
 
       
     </div>
