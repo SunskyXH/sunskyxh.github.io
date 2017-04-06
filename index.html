@@ -326,6 +326,68 @@
 <!-- Table of Contents -->
 
   
+    <article id="post-i-dont-know-js"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/03/30/i-dont-know-js/">我不懂的js集合</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/03/30/i-dont-know-js/" class="article-date">
+	  <time datetime="2017-03-30T12:57:55.000Z" itemprop="datePublished">2017-03-30</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/front-end/">front-end</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>在公司实习的时候学到了不少新东西，不如简单记录一些</p>
+</blockquote>
+<h3 id="1"><a href="#1" class="headerlink" title="1"></a>1</h3><p>最近实习的时候遇到了这样的一个需求，发送请求A之后，浏览器还有可能异步发送相同接口的请求A1，由于服务端计算的时间长短可能不一样，导致返回的顺序不一定与请求发送的顺序一致，导致界面显示的数据与最后一次请求所期望的结果不一样。</p>
+<ol>
+<li>甩锅给服务端<br>让服务端每次返回都带上一个id，通过id去匹配返回的结果是否为最后一次查询所预期的。我想这样能解决问题，但是隐约感觉到能在不修改服务端代码的情况下解决问题，于是就开始瞎折腾。</li>
+<li>尝试用debounce<br>最开始没有深入思考这个问题，简单的认为用debounce来保证短时间内多次操作只会发送一次请求。后来发现并不是那么简单，在debounce设置的延迟内服务端可能还没返回结果，若是此时浏览器又发送了新的请求，依然会出现最开始的问题。</li>
+<li>发送请求后将对应的界面disable掉<br>可以在发送请求，返回结果之前将对应触发请求的界面给disable掉，但是我想这样有两个缺点：1.对用户不够友好，一个误操作可能就要等到返回结果才能重新操作。2.并不是通用的解决方法，只适用于用户操作触发事件的情况。</li>
+<li><p>不知道叫什么的解决方法<br>想了很久以后决定去问问导师，导师告诉我他之前也遇到过这样的问题，给我讲了一下他的大致思路：</p>
+<ul>
+<li>将原方法外面包装两层，设置一个<code>cancelHandler</code>，初始为null，每次发送请求会返回一个把<code>isCancel</code>变量置为ture的函数，将这个函数赋值给<code>cancelHandler</code>，只要<code>cancelHandler</code>不为null（说明之前发送过请求了），就执行<code>cancelHandler</code>来将<code>isCancel</code>置为ture。之后再执行第二层包装的方法。</li>
+<li>第二层方法先创建一个变量<code>isCancel</code>并初始化为false，该变量用于判断是否处理response。然后创建了一个<code>succsessCallback</code>函数，该函数会作为原本发送请求的方法（成功时）的回调函数，判断<code>isCancel</code>的值来决定处不处理response。之后创建了一个<code>cancaelCallback</code>函数作为第二层包装的返回值，也就是之前那一步里赋值给<code>cancelHandler</code>的函数。之后在执行原本的请求，回调调用<code>successCallback</code>函数来判断<code>isCancel</code>以决定是否对<code>response</code>进行处理。最后第二层包装返回<code>cancelCallback</code>函数。</li>
+<li>当第一个请求发送之后，第二个请求事件触发时，此时<code>cancelHandler</code>不为null，会去将<code>isCancel</code>置为ture，这样就不会处理第一次请求的response。</li>
+<li>前面一大段简单点说就是根据有没有新的请求事件触发来决定是否处理上一次请求的response。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//在一个React组件的内部</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Example</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">    <span class="keyword">constructor</span>&#123;</div><div class="line">        <span class="comment">//balabala</span></div><div class="line">        <span class="keyword">this</span>.cancelHandler = <span class="literal">null</span>; <span class="comment">//初始化cancelHandler</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">//包在最外层的方法，触发发送请求时，调用此方法</span></div><div class="line">    startFetchData (params) &#123;</div><div class="line">        <span class="keyword">this</span>.cancelHandler &amp;&amp; <span class="keyword">this</span>.cancelHandler();</div><div class="line">        <span class="keyword">this</span>.cancelHandler = <span class="keyword">this</span>.fetchData(params);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//第二层包装,其中realFetchData()是最开始去发送请求的方法</span></div><div class="line">    fetchData (params) &#123;</div><div class="line">        <span class="keyword">let</span> isCancel = <span class="literal">false</span>;</div><div class="line">        <span class="keyword">let</span> successCallback = <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</div><div class="line">            <span class="keyword">if</span>(isCancel) <span class="keyword">return</span>;</div><div class="line">            <span class="comment">//接下来进行原本对response进行的操作</span></div><div class="line">            <span class="comment">//...</span></div><div class="line">        &#125;;</div><div class="line">        <span class="keyword">let</span> cancelCallback = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">            isCancel = <span class="literal">true</span>;</div><div class="line">        &#125;;</div><div class="line">        </div><div class="line">        realFetchData(params).then(successCallback);</div><div class="line">        <span class="keyword">return</span> cancelCallback;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//实际会这样调用</span></div><div class="line">    onSomethingClick () &#123;</div><div class="line">        <span class="comment">//...</span></div><div class="line">        <span class="keyword">this</span>.startFetchData(params);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>于是我很顺利的就解决了这个问题。但是这样还是有着一些缺点和值得思考的点，比如依然会发送一次请求，比如如何进行异常处理最合适，能不能用<code>async/await</code>让代码看起来更直接等等。</p>
+</li>
+<li>*（可能会有的）Rxjs的解决方法<br>Rxjs这种异步解决方案会不会有解决这种问题的方法呢，这个得等到读了Rxjs文档有个大概了解之后才能说清楚了。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
     <article id="post-preact-virtual-DOM-algorithm-explore"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -620,49 +682,6 @@
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-i-dont-know-js"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2016/07/30/i-dont-know-js/">我不懂的js集合</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2016/07/30/i-dont-know-js/" class="article-date">
-	  <time datetime="2016-07-30T12:57:55.000Z" itemprop="datePublished">2016-07-30</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/front-end/">front-end</a>
-
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>（一些技巧和思考）</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
 
     </footer>
   </div>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>the state of vue(自译) | Bonfire</title>
+  <title>我不懂的js集合 | Bonfire</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
     <meta name="keywords" content="tech blog, Front End, Web Develope" />
@@ -11,16 +11,28 @@
   
   
   
-  <meta name="description" content="2.0 is now in RC!We announced Vue 2.0 back in April,and today I am very excited to release the first release candidate for Vue 2.0!From this stage on we will be in API freeze and there will be no mor">
+  <meta name="description" content="在公司实习的时候学到了不少新东西，不如简单记录一些
+
+1最近实习的时候遇到了这样的一个需求，发送请求A之后，浏览器还有可能异步发送相同接口的请求A1，由于服务端计算的时间长短可能不一样，导致返回的顺序不一定与请求发送的顺序一致，导致界面显示的数据与最后一次请求所期望的结果不一样。
+
+甩锅给服务端让服务端每次返回都带上一个id，通过id去匹配返回的结果是否为最后一次查询所预期的。我想这样能解决问题">
 <meta property="og:type" content="article">
-<meta property="og:title" content="The State of Vue(自译)">
-<meta property="og:url" content="http://yoursite.com/2016/08/20/The-State-of-Vue/index.html">
+<meta property="og:title" content="我不懂的js集合">
+<meta property="og:url" content="http://yoursite.com/2017/03/30/i-dont-know-js/index.html">
 <meta property="og:site_name" content="Bonfire">
-<meta property="og:description" content="2.0 is now in RC!We announced Vue 2.0 back in April,and today I am very excited to release the first release candidate for Vue 2.0!From this stage on we will be in API freeze and there will be no mor">
-<meta property="og:updated_time" content="2017-03-11T02:24:03.000Z">
+<meta property="og:description" content="在公司实习的时候学到了不少新东西，不如简单记录一些
+
+1最近实习的时候遇到了这样的一个需求，发送请求A之后，浏览器还有可能异步发送相同接口的请求A1，由于服务端计算的时间长短可能不一样，导致返回的顺序不一定与请求发送的顺序一致，导致界面显示的数据与最后一次请求所期望的结果不一样。
+
+甩锅给服务端让服务端每次返回都带上一个id，通过id去匹配返回的结果是否为最后一次查询所预期的。我想这样能解决问题">
+<meta property="og:updated_time" content="2017-04-06T17:04:26.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="The State of Vue(自译)">
-<meta name="twitter:description" content="2.0 is now in RC!We announced Vue 2.0 back in April,and today I am very excited to release the first release candidate for Vue 2.0!From this stage on we will be in API freeze and there will be no mor">
+<meta name="twitter:title" content="我不懂的js集合">
+<meta name="twitter:description" content="在公司实习的时候学到了不少新东西，不如简单记录一些
+
+1最近实习的时候遇到了这样的一个需求，发送请求A之后，浏览器还有可能异步发送相同接口的请求A1，由于服务端计算的时间长短可能不一样，导致返回的顺序不一定与请求发送的顺序一致，导致界面显示的数据与最后一次请求所期望的结果不一样。
+
+甩锅给服务端让服务端每次返回都带上一个id，通过id去匹配返回的结果是否为最后一次查询所预期的。我想这样能解决问题">
   
     <link rel="alternate" href="/atom.xml" title="Bonfire" type="application/atom+xml">
   
@@ -146,7 +158,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-The-State-of-Vue" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-i-dont-know-js" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -154,7 +166,7 @@
         
   
     <h1 class="thumb" class="article-title" itemprop="name">
-      The State of Vue(自译)
+      我不懂的js集合
     </h1>
   
 
@@ -162,8 +174,8 @@
     
     <div class="article-meta">
       
-	<a href="/2016/08/20/The-State-of-Vue/" class="article-date">
-	  <time datetime="2016-08-20T15:11:09.000Z" itemprop="datePublished">2016-08-20</time>
+	<a href="/2017/03/30/i-dont-know-js/" class="article-date">
+	  <time datetime="2017-03-30T12:57:55.000Z" itemprop="datePublished">2017-03-30</time>
 	</a>
 
       
@@ -173,38 +185,25 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<h3 id="2-0-is-now-in-RC"><a href="#2-0-is-now-in-RC" class="headerlink" title="2.0 is now in RC!"></a>2.0 is now in RC!</h3><p>We announced Vue 2.0 back in April,<br>and today I am very excited to release the first release candidate for Vue 2.0!<br>From this stage on we will be in API freeze and there will be no more breaking changes before official release.</p>
+<p>在公司实习的时候学到了不少新东西，不如简单记录一些</p>
 </blockquote>
-<h3 id="2-0-正在候选发布-RC-！"><a href="#2-0-正在候选发布-RC-！" class="headerlink" title="2.0 正在候选发布(RC)！"></a>2.0 正在候选发布(RC)！</h3><p>我们在四月的时候宣布了<a href="https://medium.com/the-vue-point/announcing-vue-js-2-0-8af1bde7ab9" target="_blank" rel="external">Vue 2.0的消息</a>,<br>并且在今天我将非常激动地发布<a href="https://github.com/vuejs/vue/releases/tag/v2.0.0-rc.1" target="_blank" rel="external">Vue 2.0的第一个RC版本！</a><br>从这个阶段起我们将会API冻结,并且在官方版本之前将会有更多突破性的改动.<br><br></p>
-<blockquote>
-<p>All the official supporting libraries, e.g. vue-router, vuex, vue-loader &amp; vueify have all been updated to work with Vue 2.0.<br>This means the 2.0 stack is technically complete — the only thing we are waiting for is documentation and release-related logistics.<br>Despite that, we have prepared a Vue 2.0 RC Starter Resources guide to help those feeling adventurous jump right into 2.0 today.</p>
-</blockquote>
-<p>所有官方支持的库，例如vue-router,vuex,vue-loader和vueify都已经升级到能和Vue 2.0一起使用。<br>这意味着2.0在技术层面已经完善——我们唯一在等待的就是文档和发布相关的后续工作<br>尽管如此，我们准备了<a href="https://github.com/vuejs/vue/wiki/Vue-2.0-RC-Starter-Resources" target="_blank" rel="external">Vue 2.0 RC Starter Resources</a><br>指南来帮助那些想要探险的人跳入2.0的大坑。<br><br></p>
-<blockquote>
-<h3 id="Vue-js-in-the-Industry"><a href="#Vue-js-in-the-Industry" class="headerlink" title="Vue.js in the Industry"></a>Vue.js in the Industry</h3><p>I recently answered the question “How Popular is Vue.js in the Industry?” on Quora.<br>You can read about the full answer here, but here are some highlights:</p>
+<h3 id="1"><a href="#1" class="headerlink" title="1"></a>1</h3><p>最近实习的时候遇到了这样的一个需求，发送请求A之后，浏览器还有可能异步发送相同接口的请求A1，由于服务端计算的时间长短可能不一样，导致返回的顺序不一定与请求发送的顺序一致，导致界面显示的数据与最后一次请求所期望的结果不一样。</p>
+<ol>
+<li>甩锅给服务端<br>让服务端每次返回都带上一个id，通过id去匹配返回的结果是否为最后一次查询所预期的。我想这样能解决问题，但是隐约感觉到能在不修改服务端代码的情况下解决问题，于是就开始瞎折腾。</li>
+<li>尝试用debounce<br>最开始没有深入思考这个问题，简单的认为用debounce来保证短时间内多次操作只会发送一次请求。后来发现并不是那么简单，在debounce设置的延迟内服务端可能还没返回结果，若是此时浏览器又发送了新的请求，依然会出现最开始的问题。</li>
+<li>发送请求后将对应的界面disable掉<br>可以在发送请求，返回结果之前将对应触发请求的界面给disable掉，但是我想这样有两个缺点：1.对用户不够友好，一个误操作可能就要等到返回结果才能重新操作。2.并不是通用的解决方法，只适用于用户操作触发事件的情况。</li>
+<li><p>不知道叫什么的解决方法<br>想了很久以后决定去问问导师，导师告诉我他之前也遇到过这样的问题，给我讲了一下他的大致思路：</p>
 <ul>
-<li>Based on the combined metrics including Google Trends, GitHub star history &amp; stats.js.org statistics,<br>Vue.js has consistently been one of the fastest growing libraries in the past few months and there’s currently no sign of slowing down.</li>
-<li>1 million+ downloads on NPM at 125k~150k per month<br></li>
-<li>1.5 million page views &amp; 150k monthly unique visitors on vuejs.org<br></li>
-<li>36,000+ weekly active vue-devtool users<br></li>
-<li>Used by great open source projects: Laravel, GitLab, PageKit &amp; more.<br></li>
-<li>Strong international adoption: biggest Chinese public companies (Alibaba, Baidu, Tencent), biggest Chinese unicorns (private companies with $1B+ valuation — Xiaomi, Didi Chuxing, DJI, Ele.me), established enterprises in Japan/UK (Line, Nintendo, Sainsbury’s)</li>
+<li>将原方法外面包装两层，设置一个<code>cancelHandler</code>，初始为null，每次发送请求会返回一个把<code>isCancel</code>变量置为ture的函数，将这个函数赋值给<code>cancelHandler</code>，只要<code>cancelHandler</code>不为null（说明之前发送过请求了），就执行<code>cancelHandler</code>来将<code>isCancel</code>置为ture。之后再执行第二层包装的方法。</li>
+<li>第二层方法先创建一个变量<code>isCancel</code>并初始化为false，该变量用于判断是否处理response。然后创建了一个<code>succsessCallback</code>函数，该函数会作为原本发送请求的方法（成功时）的回调函数，判断<code>isCancel</code>的值来决定处不处理response。之后创建了一个<code>cancaelCallback</code>函数作为第二层包装的返回值，也就是之前那一步里赋值给<code>cancelHandler</code>的函数。之后在执行原本的请求，回调调用<code>successCallback</code>函数来判断<code>isCancel</code>以决定是否对<code>response</code>进行处理。最后第二层包装返回<code>cancelCallback</code>函数。</li>
+<li>当第一个请求发送之后，第二个请求事件触发时，此时<code>cancelHandler</code>不为null，会去将<code>isCancel</code>置为ture，这样就不会处理第一次请求的response。</li>
+<li>前面一大段简单点说就是根据有没有新的请求事件触发来决定是否处理上一次请求的response。</li>
 </ul>
-</blockquote>
-<h3 id="业界的Vue-js"><a href="#业界的Vue-js" class="headerlink" title="业界的Vue.js"></a>业界的Vue.js</h3><p>我最近在Quora上回答了“Vue在业界有多流行?”的问题. 你可以在这里看到全部的答案, 当然你也可以只看以下几点:</p>
-<ul>
-<li>根据结合了包括 Google Trends, Github star历史记录以及 stats.js.org统计数据在内的度量结果, Vue.js在过去几个月内连续保持增长最快速的库之一,并且现在毫无减弱的迹象.</li>
-<li>NPM上有100万次以上的下载, 每月12.5到15万.</li>
-<li>vuejs.org访问量达150万, 每月有15万不同的访客.</li>
-<li>vue-devtool 每月有36万以上的活跃用户.</li>
-<li>被大型开源项目所用：例如 Laravel, GitLab, PageKit 等等.</li>
-<li>国际上广为采用: 例如 中国最大的公司(阿里巴巴,腾讯,百度),中国最大的独角兽公司(具有一亿以上资产的私有公司——小米,滴滴出行,大疆,饿了么),设立在日本/英国的企业(Line,任天堂,森宝利)<br></li>
-</ul>
-<blockquote>
-<h3 id="Patreon-Campaign-Going-Strong"><a href="#Patreon-Campaign-Going-Strong" class="headerlink" title="Patreon Campaign Going Strong"></a>Patreon Campaign Going Strong</h3><p>The Vue.js patreon campign now has over $8,000 monthly pledge from the community and sponsors.<br>It is absolutely amazing to be able to work full-time on an open source project that I am genuinely passionate about, and for that I am forever grateful to all the supporters.<br></p>
-<h3 id="Patreon-Campaign-让我们更加壮大"><a href="#Patreon-Campaign-让我们更加壮大" class="headerlink" title="Patreon Campaign 让我们更加壮大"></a>Patreon Campaign 让我们更加壮大</h3><p>Vue.js patreon campign现在已经有了每月从社区和赞助者处得到的$8,000的赞助.<br>能全职投入到一个我真正为之狂热的开源项目中当然是令人惊讶的, 因此我永远感谢那些支持我的人.<br>I think the Vue.js patreon campaign is an interesting experiment on sustainable financial models for open source projects that demand serious commitment: it’s open source not as the by-product of a commercial company trying to help with recruiting — the only goal of the project is to create something that help more people get more things done in an easier and faster way. It’s sustained not by revenue that possibly has nothing to do with the project itself, but rather directly by those who use it in their everyday work. To be honest, I don’t think this is a model that is easy to pull off (for that I am very lucky), but I do hope it can serve as a valuable case study for those who are interested in more sustainable open source work.</p>
-</blockquote>
-<p>我认为Vue.js patreon campign 是一个对需要严肃承诺的开源项目的可持续金融模型上有趣的实验: 它不是因为作为商业公司用来招聘的副产品而开源——这个项目的唯一目标就是创造一些能够帮助更多的人用更简单快捷的方法做更多事情的东西. 它可持续不是因为那些可能对项目本身无益的收入,而是直接因为那些每天都在工作中都在用到它的人.讲真, 我不认为这是一个能轻松推广的模型(所以说我很幸运), 但我衷心希望它能够作为一个对致力于更加可持续开源项目的人来说有价值的案例而服务.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//在一个React组件的内部</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Example</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">    <span class="keyword">constructor</span>&#123;</div><div class="line">        <span class="comment">//balabala</span></div><div class="line">        <span class="keyword">this</span>.cancelHandler = <span class="literal">null</span>; <span class="comment">//初始化cancelHandler</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">//包在最外层的方法，触发发送请求时，调用此方法</span></div><div class="line">    startFetchData (params) &#123;</div><div class="line">        <span class="keyword">this</span>.cancelHandler &amp;&amp; <span class="keyword">this</span>.cancelHandler();</div><div class="line">        <span class="keyword">this</span>.cancelHandler = <span class="keyword">this</span>.fetchData(params);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//第二层包装,其中realFetchData()是最开始去发送请求的方法</span></div><div class="line">    fetchData (params) &#123;</div><div class="line">        <span class="keyword">let</span> isCancel = <span class="literal">false</span>;</div><div class="line">        <span class="keyword">let</span> successCallback = <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</div><div class="line">            <span class="keyword">if</span>(isCancel) <span class="keyword">return</span>;</div><div class="line">            <span class="comment">//接下来进行原本对response进行的操作</span></div><div class="line">            <span class="comment">//...</span></div><div class="line">        &#125;;</div><div class="line">        <span class="keyword">let</span> cancelCallback = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">            isCancel = <span class="literal">true</span>;</div><div class="line">        &#125;;</div><div class="line">        </div><div class="line">        realFetchData(params).then(successCallback);</div><div class="line">        <span class="keyword">return</span> cancelCallback;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//实际会这样调用</span></div><div class="line">    onSomethingClick () &#123;</div><div class="line">        <span class="comment">//...</span></div><div class="line">        <span class="keyword">this</span>.startFetchData(params);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>于是我很顺利的就解决了这个问题。但是这样还是有着一些缺点和值得思考的点，比如依然会发送一次请求，比如如何进行异常处理最合适，能不能用<code>async/await</code>让代码看起来更直接等等。</p>
+</li>
+<li>*（可能会有的）Rxjs的解决方法<br>Rxjs这种异步解决方案会不会有解决这种问题的方法呢，这个得等到读了Rxjs文档有个大概了解之后才能说清楚了。</li>
+</ol>
 
       
     </div>
@@ -239,7 +238,7 @@
 
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
 
     </footer>
   </div>
@@ -247,15 +246,20 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/09/10/vue-directive-to-highlight-code/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/04/05/6-reasons-why-javascripts-async-await-blows-promises-away/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          vue自定义指令实现Highlight.js高亮代码
+          6个Async/Await胜过Promise的理由（自译）
         
       </div>
     </a>
   
+  
+    <a href="/2017/02/26/preact-virtual-DOM-algorithm-explore/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Preact Virtual DOM算法探究</div>
+    </a>
   
 </nav>
 
@@ -268,7 +272,7 @@
     <div id="toc" class="toc-article">
     <strong class="toc-title">Contents</strong>
     
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-0-is-now-in-RC"><span class="toc-number">1.</span> <span class="toc-text">2.0 is now in RC!</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-0-正在候选发布-RC-！"><span class="toc-number">2.</span> <span class="toc-text">2.0 正在候选发布(RC)！</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-js-in-the-Industry"><span class="toc-number">3.</span> <span class="toc-text">Vue.js in the Industry</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#业界的Vue-js"><span class="toc-number">4.</span> <span class="toc-text">业界的Vue.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Patreon-Campaign-Going-Strong"><span class="toc-number">5.</span> <span class="toc-text">Patreon Campaign Going Strong</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Patreon-Campaign-让我们更加壮大"><span class="toc-number">6.</span> <span class="toc-text">Patreon Campaign 让我们更加壮大</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1"><span class="toc-number">1.</span> <span class="toc-text">1</span></a></li></ol>
     
     </div>
   </aside>
