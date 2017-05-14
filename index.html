@@ -59,7 +59,7 @@
   
     <div id="intrologo" class="intro-logo" style="background-position:center; background-repeat:no-repeat; background-image: url(); background-size: auto 100%;">
     <script>
-        var imgUrls = "http://olu3hx27t.bkt.clouddn.com/image/solar.jpg".split(",");
+        var imgUrls = "http://olu3hx27t.bkt.clouddn.com/image/solar.jpg,http://olu3hx27t.bkt.clouddn.com/iss-2-sunset-atlantic-ocean.jpg".split(",");
         var random = Math.floor((Math.random() * imgUrls.length ));
         if (imgUrls[random].startsWith('http') || imgUrls[random].indexOf('://') >= 0) {
           document.getElementById("intrologo").style.backgroundImage='url(' + imgUrls[random] + ')';
