@@ -164,49 +164,6 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-using-rxjs-in-react"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/04/28/using-rxjs-in-react/">React中使用rxjs</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/04/28/using-rxjs-in-react/" class="article-date">
-	  <time datetime="2017-04-27T18:37:01.000Z" itemprop="datePublished">2017-04-28</time>
-	</a>
-
-      
-    <a class="article-category-link" href="/categories/front-end/">front-end</a>
-
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>（填坑中）</p>
-<h3 id="1-使用rxjs简单实现状态管理"><a href="#1-使用rxjs简单实现状态管理" class="headerlink" title="1. 使用rxjs简单实现状态管理"></a>1. 使用rxjs简单实现状态管理</h3><h4 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h4><h4 id="对比Redux和Mobx"><a href="#对比Redux和Mobx" class="headerlink" title="对比Redux和Mobx"></a>对比Redux和Mobx</h4><h3 id="2-redux-observable-Epic"><a href="#2-redux-observable-Epic" class="headerlink" title="2.redux-observable Epic"></a>2.redux-observable Epic</h3><h4 id="对比redux-saga和side-effect"><a href="#对比redux-saga和side-effect" class="headerlink" title="对比redux-saga和side effect"></a>对比redux-saga和side effect</h4>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mobx/">Mobx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/">React</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redux/">Redux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Rxjs/">Rxjs</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
     <article id="post-6-reasons-why-javascripts-async-await-blows-promises-away"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -462,7 +419,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="Preact简介"><a href="#Preact简介" class="headerlink" title="Preact简介"></a>Preact简介</h3><p><img src="http://olu3hx27t.bkt.clouddn.com/image/preact.png?imageView2/2/w/200/h/100" alt=""><br>Preact是一个React轻量化的库，整个库大小只有3kb，相比其他react轻量化的方案，如25kb的<a href="https://github.com/Lucifier129/react-lite" target="_blank" rel="external">react-lite</a>，Preact在体积上有着很大的优势。<br>Preact有着和React相似的API，大部分情况下能兼容React的组件，只需要绑定一个preact-compat兼容层就能解决很多兼容问题。类似React的生态圈，Preact自己也有着规模不小的生态圈。<br>同时官网也宣称Preact有着一个简单却高效的diff算法实现使他成为最快的虚拟DOM框架之一，官网也号称自己可能是最薄的一层虚拟DOM实现。接下来本文将简单探究一下preact的虚拟DOM算法, 同时对比一下于React的Vitrual DOM算法的区别</p>
-<h3 id="Preact的Virtual-DOM实现"><a href="#Preact的Virtual-DOM实现" class="headerlink" title="Preact的Virtual DOM实现"></a>Preact的Virtual DOM实现</h3><p>React使用<code>React.createElement()</code>来实现js转换为Virtual DOM的过程，Preact在这里用了自己的实现方式。<br>Preact的Virtual DOM实现使用了<a href="https://www.npmjs.com/package/babel-plugin-transform-react-jsx" target="_blank" rel="external">babel-plugin-transform-react-jsx</a>，通过pragma注入一个函数<code>preact.h</code>，实现类似下面的转换<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** @jsx h */</span></div><div class="line"><span class="keyword">let</span> foo = &lt;div id='foo'&gt;Hello&lt;/div&gt;</div><div class="line"></div><div class="line"><span class="comment">//After babel transpilation</span></div><div class="line"><span class="keyword">var</span> foo = h(<span class="string">'div'</span>, &#123;<span class="attr">id</span>: <span class="string">'foo'</span>&#125;, <span class="string">'Hello'</span>);</div></pre></td></tr></table></figure></p>
+<h3 id="Preact的Virtual-DOM实现"><a href="#Preact的Virtual-DOM实现" class="headerlink" title="Preact的Virtual DOM实现"></a>Preact的Virtual DOM实现</h3><p>React使用<code>React.createElement()</code>来实现js转换为Virtual DOM的过程，Preact在这里用了自己的实现方式。<br>Preact的Virtual DOM实现使用了<a href="https://www.npmjs.com/package/babel-plugin-transform-react-jsx" target="_blank" rel="external">babel-plugin-transform-react-jsx</a>，通过pragma注入一个函数<code>preact.h</code>，实现类似下面的转换<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** @jsx h */</span></div><div class="line"><span class="keyword">let</span> foo = <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'foo'</span>&gt;</span>Hello<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></div><div class="line"></div><div class="line"><span class="comment">//After babel transpilation</span></div><div class="line"><span class="keyword">var</span> foo = h(<span class="string">'div'</span>, &#123;<span class="attr">id</span>: <span class="string">'foo'</span>&#125;, <span class="string">'Hello'</span>);</div></pre></td></tr></table></figure></p>
 <p>Preact利用<code>Preact.h()</code>函数来将转换后的js生成Virtual DOM，之后再利用自己的Virtual DOM算法将其转换为真实的DOM。<br>Preact.h()这个函数为<a href="https://github.com/hyperhype/hyperscript" target="_blank" rel="external">hyperscript</a>的一个简化版，有兴趣的读者可以去了解完整的hyperscript。</p>
 <h3 id="Preact的Virtual-DOM算法"><a href="#Preact的Virtual-DOM算法" class="headerlink" title="Preact的Virtual DOM算法"></a>Preact的Virtual DOM算法</h3><h4 id="创建节点"><a href="#创建节点" class="headerlink" title="创建节点"></a>创建节点</h4><p>h函数接受babel转换后的代码，生成一系列的VNode(也就是Virtual DOM)，之后执行<code>render()</code>函数，例如<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">render(h(Foo), <span class="built_in">document</span>.getElementById(<span class="string">'app'</span>))</div></pre></td></tr></table></figure></p>
 <p>h()函数会将Foo转为如下的VNode<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="attr">"nodeName"</span>: <span class="string">"Foo"</span>,</div><div class="line">    <span class="attr">"children"</span>: []</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
