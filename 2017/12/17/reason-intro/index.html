@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>reason简介 | Bonfire</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="tech blog, Front End, Web Develope" />
+  
+  
+  
+  
+  <meta name="description" content="Reason是什么Reason是OCaml的一种新语法，其目的是给OCaml类似JavaScript的语法以便JavaScript程序员使用，并通过BuckleScript编译成JavaScript。同时ES新特性的很多草案是从OCaml中引入的，比如管道操作符 |&amp;gt;，直接使用Reason能提前爽到这些东西（官方称这些特性在ECMAScript中甚至排到了ES2030），并且Reason也能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Reason简介">
+<meta property="og:url" content="http://yoursite.com/2017/12/17/reason-intro/index.html">
+<meta property="og:site_name" content="Bonfire">
+<meta property="og:description" content="Reason是什么Reason是OCaml的一种新语法，其目的是给OCaml类似JavaScript的语法以便JavaScript程序员使用，并通过BuckleScript编译成JavaScript。同时ES新特性的很多草案是从OCaml中引入的，比如管道操作符 |&amp;gt;，直接使用Reason能提前爽到这些东西（官方称这些特性在ECMAScript中甚至排到了ES2030），并且Reason也能">
+<meta property="og:updated_time" content="2017-12-17T08:59:33.220Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Reason简介">
+<meta name="twitter:description" content="Reason是什么Reason是OCaml的一种新语法，其目的是给OCaml类似JavaScript的语法以便JavaScript程序员使用，并通过BuckleScript编译成JavaScript。同时ES新特性的很多草案是从OCaml中引入的，比如管道操作符 |&amp;gt;，直接使用Reason能提前爽到这些东西（官方称这些特性在ECMAScript中甚至排到了ES2030），并且Reason也能">
+  
+    <link rel="alternate" href="/atom.xml" title="Bonfire" type="application/atom+xml">
+  
+  <link rel="icon" href="/http://olu3hx27t.bkt.clouddn.com/image/sun.png">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+
+</head>
+
+<body>
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="http://olu3hx27t.bkt.clouddn.com/image/sun.png">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><a class="main-nav-link" href="https://github.com/SunskyXH/">Github</a> </li>
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-reason-intro" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Reason简介
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/12/17/reason-intro/" class="article-date">
+	  <time datetime="2017-12-17T05:06:23.000Z" itemprop="datePublished">2017-12-17</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/front-end/">front-end</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Reason是什么"><a href="#Reason是什么" class="headerlink" title="Reason是什么"></a>Reason是什么</h2><p>Reason是OCaml的一种新语法，其目的是给OCaml类似JavaScript的语法以便JavaScript程序员使用，并通过BuckleScript编译成JavaScript。<br>同时ES新特性的很多草案是从OCaml中引入的，比如管道操作符 <code>|&gt;</code>，直接使用Reason能提前爽到这些东西（官方称这些特性在ECMAScript中甚至排到了ES2030），并且Reason也能享受到Javascript和OCaml的生态，例如你依然能够使用npm/yarn，或者opam。在构建应用方面，也有ReasonReact等库。</p>
+<h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><ul>
+<li>类型有着100%的覆盖率，能自动推断类型，一旦编译，类型会保证是明确的</li>
+<li>在大多数是纯函数（pure）、不可变（immtuable）、函数式（functional）的同时，有可选的副作用（side-effect)和数据突变(mutation)</li>
+<li>编译快速且产生的体积小</li>
+<li>能转换使用js的代码，同时依然能用js的生态系统</li>
+</ul>
+<h2 id="与JavaScript语法的联系"><a href="#与JavaScript语法的联系" class="headerlink" title="与JavaScript语法的联系"></a>与JavaScript语法的联系</h2><p>虽然Reason很大程度上是提供给JavaScript开发人员使用的，但实际上其很多语法设计是基于OCaml，在实际使用中有不少地方值得注意。</p>
+<h3 id="句末的分号"><a href="#句末的分号" class="headerlink" title="句末的分号"></a>句末的分号</h3><p>JavaScript中句末分号是可选的，Reason中分号有自己的规定，有些地方必须有分号，有些地方不可以用分号，并且是有着意义的。<br><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/* <span class="type">OCaml</span> syntax*/</div><div class="line"><span class="keyword">let</span> a = <span class="number">1</span> <span class="keyword">in</span></div><div class="line"><span class="keyword">let</span> b = <span class="number">2</span> <span class="keyword">in</span></div><div class="line">a + b</div><div class="line"></div><div class="line">/* <span class="type">Reason</span> syntax */</div><div class="line"><span class="keyword">let</span> a = <span class="number">1</span>;</div><div class="line"><span class="keyword">let</span> b = <span class="number">2</span>;</div><div class="line">a + b;</div></pre></td></tr></table></figure></p>
+<h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><p>JavaScript是典型的弱类型语言，也出现过TypeScript或者Flow等语言或工具来增强JavaScript的类型。在这一点上，Reason本身是能自动推断类型的，同时也可以使用<code>:</code>去标注类型，例如<code>let foo: int = 10;</code>。这种形式和TS、flow非常相似。<br>不过Reason没有泛型的概念, 要想声明类似一个又有int又有float的tuple需要这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">type myTuple = (int, float, int);</div><div class="line">let realMyTuple: myTuple = (1, 1.1, 2);</div></pre></td></tr></table></figure></p>
+<p>Reason的list的元素必须为同一类型，所以不需要<code>List&lt;String&gt;</code>这种操作了。</p>
+<h3 id="let关键字"><a href="#let关键字" class="headerlink" title="let关键字"></a>let关键字</h3><p>JavaScript在ES6中引入的let关键字用于声明块级作用域的变量，相同的是Reason中也有块级作用域这一概念，但是在Reason中let强调的是绑定(binding)这一概念，let绑定的变量是immtuable的.这意味这声明变量以后无法简单的直接修改值(类似es6的const关键字）。要想类似es6的let关键字声明可变变量的话，可以使用ref关键字，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">let foo = &quot;bar&quot;;</div><div class="line">Js.log(foo); /* bar */</div><div class="line">foo = &quot;foo&quot;; /* Error:The value foo is not an instance variable */</div><div class="line"></div><div class="line">let x = ref(5); /* similar to let x = 5 is ES6 */</div><div class="line">x := x^ + 1; /* similar to let x = x + 1 */</div></pre></td></tr></table></figure></p>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><p>Reason中不能使用<code>//</code>单行注释，请使用<code>/* */</code>。</p>
+<h3 id="单引号和双引号"><a href="#单引号和双引号" class="headerlink" title="单引号和双引号"></a>单引号和双引号</h3><p>在JavaScript中没有字符和字符串的区别，单双引号区别也基本只是在转义上。<br>Reason中有字符串(String)和字符(Characters)的区别，字符串使用双引号，字符使用单引号。</p>
+<h3 id="操作符的使用"><a href="#操作符的使用" class="headerlink" title="+操作符的使用"></a>+操作符的使用</h3><p>在JavaScript中<code>+</code>不仅是加法运算，同时也可以是链接字符串的操作符，而且有着比如”1”+2 = “12”这种很神奇的类型转换的问题。<br>而在Reason中，单独的<code>+</code>用于整数加法运算，浮点数的加法运算会使用<code>+.</code>，链接字符串使用<code>++</code>。<br>Reason中其他运算符，整数型和浮点型也是不同的操作符，浮点型的操作符会多一个<code>.</code>。</p>
+<h3 id="、-和布尔值"><a href="#、-和布尔值" class="headerlink" title="===、==和布尔值"></a>===、==和布尔值</h3><p>JavaScript中两种等的区别为是否严格相等，<code>===</code>除了会去比较值以外还会去比较类型和引用。<br>Reason中的<code>==</code>叫做physical equal，<code>===</code>叫做 referential equal，<code>==</code>会去深检查数据结构，<code>===</code>只会检查引用（浅检查, 和js的===是类似的）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Js.log((1,2) == (1,2)); /* true */</div><div class="line">Js.log((1,2) === (1,2)); /* false */</div><div class="line">let someTuple = (1,2);</div><div class="line">Js.log(someTuple === someTuple); /* true */</div></pre></td></tr></table></figure></p>
+<p>实际上在Reason通过bucklescript编译成JavaScript的后的代码里，<code>==</code>会被编译成<code>Caml_obj.caml_equal()</code>，<code>===</code>依然是<code>===</code>。<br>Reason的布尔值true，false表面上和JavaScript的布尔值是一回事，但在编译中会被编译为<code>Js.true_</code>和<code>Js.false_</code>。</p>
+<h3 id="null-undefined"><a href="#null-undefined" class="headerlink" title="null undefined"></a>null undefined</h3><p>JavaScript中很有名的null和undefined，null表示不存在，undefined表示未定义，在Reason中统统用None代替了。</p>
+<h3 id="数据结构类型"><a href="#数据结构类型" class="headerlink" title="数据结构类型"></a>数据结构类型</h3><p>JavaScript是基于原型的语言，所有类型都能追溯到Object.prototype，这导致无论是Array还是Object都在一定程度上有着相似性，比如Array和Object都是mutable的，这也是我们需要immtuable.js的原因之一。同时ES6中引入了迭代器(iterator)的概念，Array，Map，Set等都是基于迭代器实现的。<br>而Reason中的数据结构多种多样，其中最类似JavaScript里Object的Record则是默认immutable的。用<code>[]</code>创建的数据结构在Reason中是List，是immtuable的，创建Array则需要使用<code>[||]</code>。<br>需要注意的是，Reason的list里的元素必须为同一类型，Array为定长，这点与JavaScript有很大区别。</p>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>JavaScript中使用function关键字声明函数，在ES6中引入了箭头函数（Arrow Function）。Reason中没有function关键字，使用<code>=&gt;</code>来声明函数，装参数的括号不可以省略，参数可以使用<code>~</code>来标注到对应的参数名(像是React中给某个组件传递props然后调用该组件的this.props.名字去获取props的值)。<br>由于Reason是函数式的，没有<code>return</code>关键字，函数都可以部分调用，很方便科里化（currying），例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">let add = (x, y) =&gt; x + y;</div><div class="line">let process = add(1);</div><div class="line">let firstAnswer = process(2); /* firstAnswer = 3 */</div><div class="line">let secondAnswer = process(3); /* firstAnswer = 4 */</div><div class="line"></div><div class="line">/* 实际上add是类似于如下方式声明的 */</div><div class="line">let add = (x) =&gt; (y) =&gt; x + y;</div></pre></td></tr></table></figure></p>
+<p>因此要注意的是，调用函数时传递的参数少于函数参数的个数时并不是不传递参数而是部分调用该函数，要想实现类似JavaScript中可选参数的话需要使用<code>?</code>来标注可选参数。</p>
+<h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><p>在没有Array.map等函数或者迭代器的年代要用原生js遍历数组得老老实实写for循环，不过在Reason中for循环非常简单<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">for (i in 0 to 10) &#123;...&#125;</div><div class="line">/* 还能倒着来，没想到吧 */</div><div class="line">for (i in 10 downto 0) &#123;...&#125;</div></pre></td></tr></table></figure></p>
+<p>while循环则是大致相同</p>
+<h3 id="解构-Destructuring"><a href="#解构-Destructuring" class="headerlink" title="解构(Destructuring)"></a>解构(Destructuring)</h3><p>ES6的解构为书写代码带来了很大的便利，同时如果用的非常熟练，能写出很多简介明了的代码，Reason中同样支持了解构，并且大致与ES6的解构相似。非要说不一样的话那就是多了元组(tuple)的解构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">let myTuple = (&quot;やじゅう&quot;, &quot;せんぱい&quot;);</div><div class="line">let (yj, snpi) = myTuple;</div></pre></td></tr></table></figure></p>
+<h3 id="switch"><a href="#switch" class="headerlink" title="switch"></a>switch</h3><p>二者的switch都是拿来替代大量的if/else结构，不过Reason的switch功能结合Variant和Pattern Matching使用会变得非常强大，能极大程度的让代码变得简洁优雅，不过这里只是比较与JavaScript的异同，就不展开讲了。</p>
+<h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><p>JavaScript能使用throw抛出异常或者try catch finally结构来处理异常，Reason中使用raise来抛出异常，使用try foo { |Err =&gt; something}来处理异常，不过要注意没有finally。</p>
+<h3 id="JSX"><a href="#JSX" class="headerlink" title="JSX"></a>JSX</h3><p>JSX能够使用类似html标签的语法来使用组件，Reason依然继承了这个特点，但在某些语法上有略微不同。<br>JSX中props如果只写props名字，则会被当作true，比如<code>&lt;myInput checked /&gt;</code>, 而在Reason中这会被解释为<code>&lt;myInput checked={checked} /&gt;</code>。这一点被称为Argument punning。另外，如果是使用jsx来开发react应用的话，已经有ReasonReact了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Reason有着大量OCaml优雅语法的优点，同时对JavaScript开发者非常友好，相应的生态也有非常好的支持，对于爱折腾的个人开发者来说不失为一个有趣好玩的新鲜事物。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        
+	<section id="comments" class="comment">
+	  <div id="disqus_thread">
+	  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	  </div>
+	</section>
+
+	<script type="text/javascript">
+	var disqus_shortname = 'bonfire-1';
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	</script>
+
+
+
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OCaml/">OCaml</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Reason/">Reason</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bucklescript/">bucklescript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/04/05/6-reasons-why-javascripts-async-await-blows-promises-away/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Async/Await胜过Promise的6个理由（自译）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Reason是什么"><span class="toc-number">1.</span> <span class="toc-text">Reason是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特性"><span class="toc-number">2.</span> <span class="toc-text">特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#与JavaScript语法的联系"><span class="toc-number">3.</span> <span class="toc-text">与JavaScript语法的联系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#句末的分号"><span class="toc-number">3.1.</span> <span class="toc-text">句末的分号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类型"><span class="toc-number">3.2.</span> <span class="toc-text">类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#let关键字"><span class="toc-number">3.3.</span> <span class="toc-text">let关键字</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注释"><span class="toc-number">3.4.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#单引号和双引号"><span class="toc-number">3.5.</span> <span class="toc-text">单引号和双引号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作符的使用"><span class="toc-number">3.6.</span> <span class="toc-text">+操作符的使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#、-和布尔值"><span class="toc-number">3.7.</span> <span class="toc-text">===、==和布尔值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#null-undefined"><span class="toc-number">3.8.</span> <span class="toc-text">null undefined</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据结构类型"><span class="toc-number">3.9.</span> <span class="toc-text">数据结构类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数"><span class="toc-number">3.10.</span> <span class="toc-text">函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#循环"><span class="toc-number">3.11.</span> <span class="toc-text">循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解构-Destructuring"><span class="toc-number">3.12.</span> <span class="toc-text">解构(Destructuring)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#switch"><span class="toc-number">3.13.</span> <span class="toc-text">switch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#异常"><span class="toc-number">3.14.</span> <span class="toc-text">异常</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSX"><span class="toc-number">3.15.</span> <span class="toc-text">JSX</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      <div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2017 Bonfire All Rights Reserved.</p>
+	      <p id="copyRightCn">SunskyXH hold copyright</p>
+	</div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-92411339-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Bonfire
+          </div>
+          <div class="panel-body">
+            Copyright © 2017 SunskyXH All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+</body>
+</html>
