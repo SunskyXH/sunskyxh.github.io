@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Bonfire</title>
+  
+  <subtitle>LIT THE BONFIRE</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2018-04-28T03:53:24.701Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>SunskyXH</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>有必要将Vue项目重构到Typescript吗?</title>
+    <link href="http://yoursite.com/2018/03/12/dose-refactoring-vue-project-into-typescript-deserved/"/>
+    <id>http://yoursite.com/2018/03/12/dose-refactoring-vue-project-into-typescript-deserved/</id>
+    <published>2018-03-12T13:20:34.000Z</published>
+    <updated>2018-04-28T03:53:24.701Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;Vue对Typescript的支持&quot;&gt;&lt;a href=&quot;#Vue对Typescript的支持&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="front-end" scheme="http://yoursite.com/categories/front-end/"/>
+    
+    
+      <category term="Vue" scheme="http://yoursite.com/tags/Vue/"/>
+    
+      <category term="Typescript" scheme="http://yoursite.com/tags/Typescript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Reason简介</title>
+    <link href="http://yoursite.com/2017/12/17/reason-intro/"/>
+    <id>http://yoursite.com/2017/12/17/reason-intro/</id>
+    <published>2017-12-17T05:06:23.000Z</published>
+    <updated>2017-12-17T09:25:14.676Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;Reason是什么&quot;&gt;&lt;a href=&quot;#Reason是什么&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="front-end" scheme="http://yoursite.com/categories/front-end/"/>
+    
+    
+      <category term="javascript" scheme="http://yoursite.com/tags/javascript/"/>
+    
+      <category term="Reason" scheme="http://yoursite.com/tags/Reason/"/>
+    
+      <category term="OCaml" scheme="http://yoursite.com/tags/OCaml/"/>
+    
+      <category term="bucklescript" scheme="http://yoursite.com/tags/bucklescript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Async/Await胜过Promise的6个理由（自译）</title>
+    <link href="http://yoursite.com/2017/04/05/6-reasons-why-javascripts-async-await-blows-promises-away/"/>
+    <id>http://yoursite.com/2017/04/05/6-reasons-why-javascripts-async-await-blows-promises-away/</id>
+    <published>2017-04-04T17:28:56.000Z</published>
+    <updated>2017-04-12T14:59:13.000Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;a href=&quot;https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9&quot; target=&quot;_blank&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="front-end" scheme="http://yoursite.com/categories/front-end/"/>
+    
+    
+      <category term="javascript" scheme="http://yoursite.com/tags/javascript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>我不懂的js集合</title>
+    <link href="http://yoursite.com/2017/03/30/i-dont-know-js/"/>
+    <id>http://yoursite.com/2017/03/30/i-dont-know-js/</id>
+    <published>2017-03-30T12:57:55.000Z</published>
+    <updated>2017-05-17T17:28:09.000Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;blockquote&gt;
+&lt;p&gt;在公司实习的时候学到了不少新东西，不如简单记录一些&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;1-取消异步请求带来的思考&quot;&gt;&lt;a href=&quot;#1-取消异步请求带来的思考&quot; class=&quot;headerlink&quot; title=&quot;1
+        
+      
+    
+    </summary>
+    
+      <category term="front-end" scheme="http://yoursite.com/categories/front-end/"/>
+    
+    
+      <category term="javascript" scheme="http://yoursite.com/tags/javascript/"/>
+    
+      <category term="redux-saga" scheme="http://yoursite.com/tags/redux-saga/"/>
+    
+      <category term="redux-observable" scheme="http://yoursite.com/tags/redux-observable/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Preact Virtual DOM算法探究</title>
+    <link href="http://yoursite.com/2017/02/26/preact-virtual-DOM-algorithm-explore/"/>
+    <id>http://yoursite.com/2017/02/26/preact-virtual-DOM-algorithm-explore/</id>
+    <published>2017-02-26T05:50:19.000Z</published>
+    <updated>2017-04-27T18:48:26.000Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;Preact简介&quot;&gt;&lt;a href=&quot;#Preact简介&quot; class=&quot;headerlink&quot; title=&quot;Preact简介&quot;&gt;&lt;/a&gt;Preact简介&lt;/h3&gt;&lt;p&gt;&lt;img
+        
+      
+    
+    </summary>
+    
+      <category term="front-end" scheme="http://yoursite.com/categories/front-end/"/>
+    
+    
+      <category term="React" scheme="http://yoursite.com/tags/React/"/>
+    
+      <category term="Preact" scheme="http://yoursite.com/tags/Preact/"/>
+    
+      <category term="Virtual DOM" scheme="http://yoursite.com/tags/Virtual-DOM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>GraphQL+Relay初探</title>
+    <link href="http://yoursite.com/2017/02/22/GraphQL-Relay-first-explore/"/>
+    <id>http://yoursite.com/2017/02/22/GraphQL-Relay-first-explore/</id>
+    <published>2017-02-21T16:32:09.000Z</published>
+    <updated>2017-03-13T16:50:39.000Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;GraphQL简介&quot;&gt;&lt;a href=&quot;#GraphQL简介&quot; class=&quot;headerlink&quot; title=&quot;GraphQL简介&quot;&gt;&lt;/a&gt;GraphQL简介&lt;/h3&gt;&lt;p&gt;&lt;img
+        
+      
+    
+    </summary>
+    
+      <category term="front-end" scheme="http://yoursite.com/categories/front-end/"/>
+    
+      <category term="back-end" scheme="http://yoursite.com/categories/front-end/back-end/"/>
+    
+    
+      <category term="GraphQL" scheme="http://yoursite.com/tags/GraphQL/"/>
+    
+      <category term="Relay" scheme="http://yoursite.com/tags/Relay/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>vue自定义指令实现Highlight.js高亮代码</title>
+    <link href="http://yoursite.com/2016/09/10/vue-directive-to-highlight-code/"/>
+    <id>http://yoursite.com/2016/09/10/vue-directive-to-highlight-code/</id>
+    <published>2016-09-10T14:58:05.000Z</published>
+    <updated>2017-03-11T02:25:23.000Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;在Vue项目中直接引入highlight.js会遇到一些问题，&lt;a href=&quot;https://forum.vuejs.org/topic/3514/getting-highlightjs-to-work-with-vue-router&quot; target=&quot;_blank&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="front-end" scheme="http://yoursite.com/categories/front-end/"/>
+    
+    
+      <category term="Vue" scheme="http://yoursite.com/tags/Vue/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>The State of Vue(自译)</title>
+    <link href="http://yoursite.com/2016/08/20/The-State-of-Vue/"/>
+    <id>http://yoursite.com/2016/08/20/The-State-of-Vue/</id>
+    <published>2016-08-20T15:11:09.000Z</published>
+    <updated>2017-04-08T06:28:00.000Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;blockquote&gt;
+&lt;h3 id=&quot;2-0-is-now-in-RC&quot;&gt;&lt;a href=&quot;#2-0-is-now-in-RC&quot; class=&quot;headerlink&quot; title=&quot;2.0 is now in RC!&quot;&gt;&lt;/a&gt;2.0 is now in
+        
+      
+    
+    </summary>
+    
+      <category term="front-end" scheme="http://yoursite.com/categories/front-end/"/>
+    
+    
+      <category term="Vue" scheme="http://yoursite.com/tags/Vue/"/>
+    
+  </entry>
+  
+</feed>
