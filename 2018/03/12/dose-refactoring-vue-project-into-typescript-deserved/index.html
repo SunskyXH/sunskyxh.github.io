@@ -1,219 +1,178 @@
 <!DOCTYPE html>
-<html lang=en,zh-cn,default>
-  <head>
-  <meta charset="UTF-8">
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>有必要将vue项目重构到typescript吗? | 香香鸡的小窝</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="description" content="这里什么都没有">
-  <meta name="keywords" content="undefined">
   
-    <link rel="icon" href="">
+    <meta name="keywords" content="tech blog, Front End, Web Develope" />
   
-  <title>有必要将Vue项目重构到Typescript吗?</title>
+  
+  
+  
+  <meta name="description" content="Vue对Typescript的支持与React不同的是，Vue的组件在运行时是动态生成的，换句话说就是在非runtime环境是无法知道具体变量的类型的，而React尤其是使用了ES6class作为组件的React在做静态类型检查的时候会有天生的优势，也就是这个原因导致tsx的支持非常的迅速。虽然Vue在2.5.0版本中为Vue，vue-route和vuex等库加入了大量的type decla">
+<meta property="og:type" content="article">
+<meta property="og:title" content="有必要将Vue项目重构到Typescript吗?">
+<meta property="og:url" content="https://sunskyxh.github.io/2018/03/12/dose-refactoring-vue-project-into-typescript-deserved/index.html">
+<meta property="og:site_name" content="香香鸡的小窝">
+<meta property="og:description" content="Vue对Typescript的支持与React不同的是，Vue的组件在运行时是动态生成的，换句话说就是在非runtime环境是无法知道具体变量的类型的，而React尤其是使用了ES6class作为组件的React在做静态类型检查的时候会有天生的优势，也就是这个原因导致tsx的支持非常的迅速。虽然Vue在2.5.0版本中为Vue，vue-route和vuex等库加入了大量的type decla">
+<meta property="og:updated_time" content="2018-04-28T03:53:24.701Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="有必要将Vue项目重构到Typescript吗?">
+<meta name="twitter:description" content="Vue对Typescript的支持与React不同的是，Vue的组件在运行时是动态生成的，换句话说就是在非runtime环境是无法知道具体变量的类型的，而React尤其是使用了ES6class作为组件的React在做静态类型检查的时候会有天生的优势，也就是这个原因导致tsx的支持非常的迅速。虽然Vue在2.5.0版本中为Vue，vue-route和vuex等库加入了大量的type decla">
+  
+    <link rel="alternate" href="/atom.xml" title="香香鸡的小窝" type="application/atom+xml">
+  
+  <link rel="icon" href="/http://olu3hx27t.bkt.clouddn.com/image/sun.png">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
   <link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/css/atom-one-light.css">
-<link rel="stylesheet" href="/css/font-awesome.min.css">
-  <script src="/js/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
-</head>
-<body>
-  <div class="wrapper">
-    <div class="default_title">
-        <img src="/imgs/mycomputer.png" />
-        <h1>香香鸡的小窝</h1>
-    </div>
-    <ul class="topbar">
-    
-        <li>
-        <a href="/" class="item-link">首页</a>
-        </li>
-    
-        <li>
-        <a href="/about" class="item-link">关于</a>
-        </li>
-    
-    </ul>
-    <div class="tag_list">
-    <ul id="tag-list">
-        <li><a href="/" ><img src="/imgs/disk.png" />(C:)</a>
-        <ul>
-        
-            <li>
-            <a href="/tags/GraphQL" title="GraphQL" rel="1">
-                <img src="/imgs/folder.ico" />
-                GraphQL
-            </a>
-            </li>    
-        
-            <li>
-            <a href="/tags/Relay" title="Relay" rel="1">
-                <img src="/imgs/folder.ico" />
-                Relay
-            </a>
-            </li>    
-        
-            <li>
-            <a href="/tags/Vue" title="Vue" rel="3">
-                <img src="/imgs/folder.ico" />
-                Vue
-            </a>
-            </li>    
-        
-            <li>
-            <a href="/tags/javascript" title="javascript" rel="3">
-                <img src="/imgs/folder.ico" />
-                javascript
-            </a>
-            </li>    
-        
-            <li>
-            <a href="/tags/Typescript" title="Typescript" rel="1">
-                <img src="/imgs/folder.ico" />
-                Typescript
-            </a>
-            </li>    
-        
-            <li>
-            <a href="/tags/redux-saga" title="redux-saga" rel="1">
-                <img src="/imgs/folder.ico" />
-                redux-saga
-            </a>
-            </li>    
-        
-            <li>
-            <a href="/tags/redux-observable" title="redux-observable" rel="1">
-                <img src="/imgs/folder.ico" />
-                redux-observable
-            </a>
-            </li>    
-        
-            <li>
-            <a href="/tags/React" title="React" rel="1">
-                <img src="/imgs/folder.ico" />
-                React
-            </a>
-            </li>    
-        
-            <li>
-            <a href="/tags/Preact" title="Preact" rel="1">
-                <img src="/imgs/folder.ico" />
-                Preact
-            </a>
-            </li>    
-        
-            <li>
-            <a href="/tags/Virtual DOM" title="Virtual DOM" rel="1">
-                <img src="/imgs/folder.ico" />
-                Virtual DOM
-            </a>
-            </li>    
-        
-            <li>
-            <a href="/tags/Reason" title="Reason" rel="1">
-                <img src="/imgs/folder.ico" />
-                Reason
-            </a>
-            </li>    
-        
-            <li>
-            <a href="/tags/OCaml" title="OCaml" rel="1">
-                <img src="/imgs/folder.ico" />
-                OCaml
-            </a>
-            </li>    
-        
-            <li>
-            <a href="/tags/bucklescript" title="bucklescript" rel="1">
-                <img src="/imgs/folder.ico" />
-                bucklescript
-            </a>
-            </li>    
-        
-        </ul>
-    </ul>
-    </div>
-    <div class="post_list">
-    <ul>
-        
-            <li>
-            <a href="/2017/02/22/GraphQL-Relay-first-explore/">
-            <img src="/imgs/file.ico" />
-                GraphQL+Relay初探
-            </a>
-            </li>
-        
-            <li>
-            <a href="/2016/08/20/The-State-of-Vue/">
-            <img src="/imgs/file.ico" />
-                The State of Vue(自译)
-            </a>
-            </li>
-        
-            <li>
-            <a href="/2017/04/05/6-reasons-why-javascripts-async-await-blows-promises-away/">
-            <img src="/imgs/file.ico" />
-                Async/Await胜过Promise的6个理由（自译）
-            </a>
-            </li>
-        
-            <li>
-            <a href="/2018/03/12/dose-refactoring-vue-project-into-typescript-deserved/">
-            <img src="/imgs/file.ico" />
-                有必要将Vue项目重构到Typescript吗?
-            </a>
-            </li>
-        
-            <li>
-            <a href="/2017/03/30/i-dont-know-js/">
-            <img src="/imgs/file.ico" />
-                我不懂的js集合
-            </a>
-            </li>
-        
-            <li>
-            <a href="/2016/09/10/vue-directive-to-highlight-code/">
-            <img src="/imgs/file.ico" />
-                vue自定义指令实现Highlight.js高亮代码
-            </a>
-            </li>
-        
-            <li>
-            <a href="/2017/02/26/preact-virtual-DOM-algorithm-explore/">
-            <img src="/imgs/file.ico" />
-                Preact Virtual DOM算法探究
-            </a>
-            </li>
-        
-            <li>
-            <a href="/2017/12/17/reason-intro/">
-            <img src="/imgs/file.ico" />
-                Reason简介
-            </a>
-            </li>
-        
-    </ul>
-    </div>
 
-    <div class="post_total">
-        
-            <div class="left">8 object(s)</div>
-        
-        <div class="right">&nbsp;</div>
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+
+</head>
+
+<body>
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="http://olu3hx27t.bkt.clouddn.com/image/sun.png">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><a class="main-nav-link" href="https://github.com/SunskyXH/">Github</a> </li>
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
     </div>
 </div>
-  <div class="content">
-    <div class="post_title">
-      <img src="/imgs/file.png" />
-      <h1>有必要将Vue项目重构到Typescript吗?</h1>
-      <a href="/"><div class="btn"><span class="fa fa-times"></span></div></a>
-      <div class="btn btn_max"><span class="fa fa-window-maximize"></span></div>
-      <div class="btn"><span class="fa fa-window-minimize"></span></div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
     </div>
-    <ul class="topbar">
-      <li>Mon Mar 12 2018 21:20:34 GMT+0800</li>
-    </ul>
-    <div class="post_content">
-      <h2 id="Vue对Typescript的支持"><a href="#Vue对Typescript的支持" class="headerlink" title="Vue对Typescript的支持"></a>Vue对Typescript的支持</h2><p>与React不同的是，Vue的组件在运行时是动态生成的，换句话说就是在非runtime环境是无法知道具体变量的类型的，而React尤其是使用了ES6class作为组件的React在做静态类型检查的时候会有天生的优势，也就是这个原因导致tsx的支持非常的迅速。<br>虽然Vue在2.5.0版本中为<code>Vue</code>，<code>vue-route</code>和<code>vuex</code>等库加入了大量的type declarations，但是Typescript依然无法轻易的推断出Vue中用到的基于对象的Api中的<code>this</code>，换个通俗点的说法就是以前用Typescript难以推断用Object的写法写出的Vue组件中的<code>this</code>。</p>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-dose-refactoring-vue-project-into-typescript-deserved" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      有必要将Vue项目重构到Typescript吗?
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/03/12/dose-refactoring-vue-project-into-typescript-deserved/" class="article-date">
+	  <time datetime="2018-03-12T13:20:34.000Z" itemprop="datePublished">2018-03-12</time>
+	</a>
+
+      
+    <a class="article-category-link" href="/categories/front-end/">front-end</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Vue对Typescript的支持"><a href="#Vue对Typescript的支持" class="headerlink" title="Vue对Typescript的支持"></a>Vue对Typescript的支持</h2><p>与React不同的是，Vue的组件在运行时是动态生成的，换句话说就是在非runtime环境是无法知道具体变量的类型的，而React尤其是使用了ES6class作为组件的React在做静态类型检查的时候会有天生的优势，也就是这个原因导致tsx的支持非常的迅速。<br>虽然Vue在2.5.0版本中为<code>Vue</code>，<code>vue-route</code>和<code>vuex</code>等库加入了大量的type declarations，但是Typescript依然无法轻易的推断出Vue中用到的基于对象的Api中的<code>this</code>，换个通俗点的说法就是以前用Typescript难以推断用Object的写法写出的Vue组件中的<code>this</code>。</p>
 <h2 id="vue-class-component"><a href="#vue-class-component" class="headerlink" title="vue-class-component"></a>vue-class-component</h2><p>为了解决这个问题，Vue官方推出了一个名为<code>vue-class-component</code>的库，该库提供了一个名为Component的装饰器，目的在于能让开发者用class的语法去写Vue组件。<br>大致会发生如下改变</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 改造前</span></div><div class="line">&lt;script&gt;</div><div class="line"><span class="keyword">import</span> someComponent from <span class="string">'path/to/component'</span></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">    props: &#123; propsA: &#123; <span class="keyword">type</span>: <span class="built_in">String</span>, required: <span class="literal">true</span> &#125; &#125;,</div><div class="line">    component: &#123; someComponent &#125;,</div><div class="line">    data() &#123;</div><div class="line">        <span class="keyword">return</span> &#123;</div><div class="line">            dataA: <span class="string">''</span>,</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    computed &#123;</div><div class="line">        computedA() &#123; <span class="keyword">return</span> <span class="keyword">this</span>.dataA + <span class="string">'wahaha'</span> &#125;</div><div class="line">    &#125;</div><div class="line">    methods: &#123;</div><div class="line">        foo () &#123;</div><div class="line">            alert(<span class="keyword">this</span>.dataA)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    mounted () &#123;</div><div class="line">        <span class="keyword">this</span>.foo()</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">&lt;<span class="regexp">/script&gt;</span></div></pre></td></tr></table></figure>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 改造后</span></div><div class="line">&lt;script lang=<span class="string">'ts'</span>&gt;</div><div class="line"><span class="keyword">import</span> SomeComponent from <span class="string">'path/to/component'</span></div><div class="line"><span class="keyword">import</span> Vue from <span class="string">'vue'</span></div><div class="line"><span class="keyword">import</span> Component from <span class="string">'vue-class-component'</span></div><div class="line"></div><div class="line"><span class="meta">@Component</span>(&#123;</div><div class="line">    props: &#123; propsA: &#123; <span class="keyword">type</span>: <span class="built_in">String</span>, required: <span class="literal">true</span> &#125; &#125;,</div><div class="line">    component: &#123; someComponent &#125;</div><div class="line">&#125;)</div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> Foo extends Vue &#123;</div><div class="line">    propMessage!: <span class="built_in">string</span></div><div class="line">    dataA: <span class="built_in">string</span> = <span class="string">''</span></div><div class="line">    <span class="keyword">get</span> computedA(): <span class="built_in">string</span> &#123; <span class="keyword">return</span> <span class="keyword">this</span>.dataA + <span class="string">'wahaha'</span> &#125;</div><div class="line">    foo () &#123;</div><div class="line">        alert(<span class="keyword">this</span>.dataA)</div><div class="line">    &#125;</div><div class="line">    mounted () &#123;</div><div class="line">        <span class="keyword">this</span>.foo()</div><div class="line">    &#125;</div><div class="line">    $refs!: &#123;</div><div class="line">        SomeComponent: SomeComponent</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">&lt;<span class="regexp">/script&gt;</span></div></pre></td></tr></table></figure>
@@ -253,46 +212,247 @@
 <h2 id="Reactive"><a href="#Reactive" class="headerlink" title="Reactive"></a>Reactive</h2><p>响应式的数据是vue的特色之一，但是也导致了使用了响应式数据的计算属性/方法无法有typescript来推断类型，需要自己手动标注。不能使用类型推断而需要自己一个个手动标注，如果是比较大的项目，很有可能出现很多变量都是<code>any</code>类型（是的我就喜欢这样干），那这样引入ts也就毫无意义了</p>
 <h2 id="简单总结"><a href="#简单总结" class="headerlink" title="简单总结"></a>简单总结</h2><p>随着vue版本更新，vue项目也能ts带来的诸多好处，但是并不是每一个团队都能在紧张刺激的产品迭代期间挤出时间进行这样的重构。相比这些好处，重构的工程量究竟会有多大，是否真的有必要这样做是一个值得思考的问题。</p>
 
+      
     </div>
-</div>
-  <footer class="footer">
-  <p> powered by hexo</p>
+    <footer class="article-footer">
+      
+        
+	<section id="comments" class="comment">
+	  <div id="disqus_thread">
+	  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+	  </div>
+	</section>
+
+	<script type="text/javascript">
+	var disqus_shortname = 'bonfire-1';
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	(function(){
+	  var dsq = document.createElement('script');
+	  dsq.type = 'text/javascript';
+	  dsq.async = true;
+	  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+	  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	}());
+	</script>
+
+
+
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Typescript/">Typescript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/17/reason-intro/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Reason简介</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Vue对Typescript的支持"><span class="toc-number">1.</span> <span class="toc-text">Vue对Typescript的支持</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue-class-component"><span class="toc-number">2.</span> <span class="toc-text">vue-class-component</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue-property-decorator"><span class="toc-number">3.</span> <span class="toc-text">vue-property-decorator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Declaration"><span class="toc-number">4.</span> <span class="toc-text">Declaration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reactive"><span class="toc-number">5.</span> <span class="toc-text">Reactive</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简单总结"><span class="toc-number">6.</span> <span class="toc-text">简单总结</span></a></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      <div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2018 香香鸡的小窝 All Rights Reserved.</p>
+	      <p id="copyRightCn">SunskyXH hold copyright</p>
+	</div>
+  </div>
 </footer>
+
+
+<!-- min height -->
+
 <script>
-  var max = document.getElementsByClassName("btn")[1];
-  var min = document.getElementsByClassName("btn")[2];
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
 
-  function maximize () {
-    var post = document.getElementsByClassName("content")[0];
-    var cont = document.getElementsByClassName("post_content")[0];
-    var wid = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName("body")[0].clientWidth;
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
 
-    if (wid > 900) {
-      widf = wid * 0.9;
-      post.style.width = widf + "px";
+<!-- mathjax config similar to math.stackexchange -->
 
-      if (wid < 1400) {
-        cont.style.width = "99%";
-      } else {
-        cont.style.width = "99.4%";
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
       }
-    }
-  }
+    });
+</script>
 
-  function minimize () {
-    var post = document.getElementsByClassName("content")[0];
-    var cont = document.getElementsByClassName("post_content")[0];
-    var wid = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName("body")[0].clientWidth;
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
 
-    if ( wid > 900 ) {
-      post.style.width = "800px";
-      cont.style.width = "98.5%";
-    }
-  }
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
-  max && max.addEventListener('click', maximize, false);
-  min && min.addEventListener('click', minimize, false);
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-92411339-1', 'auto');
+ga('send', 'pageview');
 
 </script>
+<!-- End Google Analytics -->
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            香香鸡的小窝
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 SunskyXH All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
 </body>
 </html>
